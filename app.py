@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 from pymongo import MongoClient
 from bson.objectid import ObjectId
+from datetime import datetime
 from config import MONGO_URI, DB_NAME, HOST, PORT, DEBUG
 
 app = Flask(__name__)
@@ -84,8 +85,15 @@ def nueva_receta(paciente_id):
     if request.method == "POST":
         sintomas = request.form.get("sintomas", "").strip()
         diagnostico = request.form.get("diagnostico", "").strip()
+        indicaciones = request.form.get("indicaciones", "").strip()
         receta = request.form.getlist("medicamentos")
-        nuevo_historial = {"sintomas": sintomas, "diagnostico": diagnostico, "receta": receta}
+        nuevo_historial = {
+            "sintomas": sintomas, 
+            "diagnostico": diagnostico, 
+            "indicaciones": indicaciones,
+            "receta": receta,
+            "fecha": datetime.now().strftime("%d/%m/%Y %H:%M")
+        }
         pacientes_collection.update_one({"_id": oid}, {"$push": {"historial": nuevo_historial}})
         flash("Receta guardada en el historial", "success")
         return redirect(url_for("historial", paciente_id=paciente_id))
