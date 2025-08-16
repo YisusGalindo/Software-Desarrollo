@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="mb-0">Pacientes</h2>
+  </div>
+
+  <form method="POST" action="/pacientes/nuevo" class="row g-3 mb-4">
+    <div class="col-md-4">
+      <input type="text" name="nombre" placeholder="Nombre" required class="form-control">
+    </div>
+    <div class="col-md-2">
+      <input type="text" name="edad" placeholder="Edad" class="form-control">
+    </div>
+    <div class="col-md-3">
+      <input type="text" name="telefono" placeholder="Teléfono" class="form-control">
+    </div>
+    <div class="col-md-2">
+      <button type="submit" class="btn btn-success">Agregar Paciente</button>
+    </div>
+  </form>
+
+  <div class="table-responsive">
+    <table class="table table-striped align-middle">
+      <thead>
+        <tr><th>Nombre</th><th>Edad</th><th>Teléfono</th><th>Acciones</th></tr>
+      </thead>
+      <tbody>
+        {% for p in pacientes %}
+          <tr>
+            <td>{{ p.nombre }}</td>
+            <td>{{ p.edad }}</td>
+            <td>{{ p.telefono }}</td>
+            <td>
+              <a class="btn btn-primary btn-sm" href="/receta/{{ p._id }}">Crear Receta</a>
+              <a class="btn btn-secondary btn-sm" href="/historial/{{ p._id }}">Historial</a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

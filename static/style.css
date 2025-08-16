@@ -1,0 +1,7 @@
+body { padding-bottom: 40px; }
+.navbar-brand { font-weight: 700; }
+.badge { font-size: 0.9rem; }
+.print-hidden { display: inline-block; }
+@media print {
+  .print-hidden { display: none !important; }
+}

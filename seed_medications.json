@@ -1,0 +1,42 @@
+[
+  {
+    "nombre": "Paracetamol Infantil",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Ibuprofeno Pediátrico",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Amoxicilina 250mg/5ml",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Cefalexina 250mg/5ml",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Azitromicina 200mg/5ml",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Loratadina Gotas",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Cetirizina Gotas",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Salbutamol Jarabe",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Ambroxol Jarabe",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Ondansetrón Gotas",
+    "es_pediatrico": true
+  }
+]

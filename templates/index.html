@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="row g-4">
+    <div class="col-md-6">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">Pacientes</h5>
+          <p class="card-text">Total registrados: <span class="badge text-bg-primary">{{ total_pacientes }}</span></p>
+          <a class="btn btn-primary" href="/pacientes">Ir a Pacientes</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">Medicamentos</h5>
+          <p class="card-text">Total cargados: <span class="badge text-bg-secondary">{{ total_medicamentos }}</span></p>
+          <a class="btn btn-secondary" href="/medicamentos">Administrar Medicamentos</a>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

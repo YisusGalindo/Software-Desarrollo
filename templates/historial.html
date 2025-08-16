@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="mb-0">Historial de {{ paciente.nombre }}</h2>
+    <a href="/pacientes" class="btn btn-outline-secondary">Volver</a>
+  </div>
+
+  {% if paciente.historial and paciente.historial|length > 0 %}
+    {% for consulta in paciente.historial %}
+      <div class="card mb-3">
+        <div class="card-body">
+          <div class="d-flex justify-content-between">
+            <h5 class="card-title">Consulta #{{ loop.index }}</h5>
+            <a class="btn btn-sm btn-outline-primary print-hidden" href="/receta/print/{{ paciente._id }}/{{ loop.index0 }}">Imprimir Receta</a>
+          </div>
+          <p class="mb-1"><strong>Síntomas:</strong> {{ consulta.sintomas }}</p>
+          <p class="mb-1"><strong>Diagnóstico:</strong> {{ consulta.diagnostico }}</p>
+          <p class="mb-1"><strong>Medicamentos:</strong></p>
+          <ul class="mb-0">
+            {% for med in consulta.receta %}
+              <li>{{ med }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    {% endfor %}
+  {% else %}
+    <div class="alert alert-info">Aún no hay historial clínico.</div>
+  {% endif %}
+{% endblock %}
