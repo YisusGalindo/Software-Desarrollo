@@ -1,25 +1,258 @@
 {% extends "base.html" %}
 {% block content %}
-  <h2>Receta para {{ paciente.nombre }}</h2>
-  <form method="POST" class="mt-3">
-    <div class="mb-3">
-      <label class="form-label">Síntomas</label>
-      <textarea name="sintomas" class="form-control" required></textarea>
+<div class="container-fluid">
+  <div class="row">
+    <!-- Formulario de Receta -->
+    <div class="col-lg-8">
+      <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+          <h4 class="mb-0">
+            <i class="fas fa-prescription-bottle-alt me-2"></i>
+            Nueva Receta para {{ paciente.nombre }}
+          </h4>
+        </div>
+        <div class="card-body">
+          <form method="POST" id="recetaForm">
+            <!-- Información del Paciente -->
+            <div class="row mb-4">
+              <div class="col-md-6">
+                <div class="card bg-light">
+                  <div class="card-body py-2">
+                    <h6 class="card-title mb-1">Datos del Paciente</h6>
+                    <p class="mb-1"><strong>Nombre:</strong> {{ paciente.nombre }}</p>
+                    <p class="mb-1"><strong>Edad:</strong> {{ paciente.edad or 'No especificada' }}</p>
+                    <p class="mb-0"><strong>Teléfono:</strong> {{ paciente.telefono or 'No especificado' }}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="card bg-light">
+                  <div class="card-body py-2">
+                    <h6 class="card-title mb-1">Fecha de Consulta</h6>
+                    <input type="date" class="form-control" id="fechaConsulta" value="" readonly>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Síntomas -->
+            <div class="mb-4">
+              <label class="form-label fw-bold">
+                <i class="fas fa-stethoscope me-2 text-danger"></i>
+                Síntomas Presentados
+              </label>
+              <textarea name="sintomas" class="form-control" rows="3" required 
+                        placeholder="Describa los síntomas que presenta el paciente..."></textarea>
+            </div>
+
+            <!-- Diagnóstico -->
+            <div class="mb-4">
+              <label class="form-label fw-bold">
+                <i class="fas fa-diagnoses me-2 text-success"></i>
+                Diagnóstico
+              </label>
+              <textarea name="diagnostico" class="form-control" rows="3" required 
+                        placeholder="Escriba el diagnóstico médico..."></textarea>
+            </div>
+
+            <!-- Medicamentos -->
+            <div class="mb-4">
+              <label class="form-label fw-bold">
+                <i class="fas fa-pills me-2 text-primary"></i>
+                Medicamentos Recetados
+              </label>
+              <select id="medicamentos" name="medicamentos" class="form-control" multiple required>
+                {% for med in medicamentos %}
+                  <option value="{{ med.nombre }}">{{ med.nombre }}</option>
+                {% endfor %}
+              </select>
+              <div class="form-text">
+                <i class="fas fa-info-circle me-1"></i>
+                Busque y seleccione los medicamentos. Puede seleccionar múltiples opciones.
+              </div>
+            </div>
+
+            <!-- Indicaciones Adicionales -->
+            <div class="mb-4">
+              <label class="form-label fw-bold">
+                <i class="fas fa-clipboard-list me-2 text-warning"></i>
+                Indicaciones Adicionales (Opcional)
+              </label>
+              <textarea name="indicaciones" class="form-control" rows="2" 
+                        placeholder="Instrucciones especiales, dosis, frecuencia, etc."></textarea>
+            </div>
+
+            <!-- Botones -->
+            <div class="d-flex gap-2">
+              <button type="submit" class="btn btn-success btn-lg">
+                <i class="fas fa-save me-2"></i>
+                Guardar Receta
+              </button>
+              <a href="/pacientes" class="btn btn-outline-secondary btn-lg">
+                <i class="fas fa-times me-2"></i>
+                Cancelar
+              </a>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
-    <div class="mb-3">
-      <label class="form-label">Diagnóstico</label>
-      <textarea name="diagnostico" class="form-control" required></textarea>
+
+    <!-- Vista Previa de la Receta -->
+    <div class="col-lg-4">
+      <div class="card shadow-sm">
+        <div class="card-header bg-secondary text-white">
+          <h5 class="mb-0">
+            <i class="fas fa-eye me-2"></i>
+            Vista Previa
+          </h5>
+        </div>
+        <div class="card-body">
+          <div class="receta-preview border p-3" style="background: #f8f9fa; min-height: 400px;">
+            <div class="text-center mb-3">
+              <h6 class="fw-bold text-primary">CONSULTORIO PEDIÁTRICO</h6>
+              <small class="text-muted">Receta Médica</small>
+            </div>
+            
+            <hr>
+            
+            <div class="mb-2">
+              <small><strong>Paciente:</strong> {{ paciente.nombre }}</small>
+            </div>
+            <div class="mb-2">
+              <small><strong>Edad:</strong> {{ paciente.edad or 'No especificada' }}</small>
+            </div>
+            <div class="mb-3">
+              <small><strong>Fecha:</strong> <span id="fechaPreview"></span></small>
+            </div>
+            
+            <div class="mb-2">
+              <small><strong>Diagnóstico:</strong></small>
+              <div id="diagnosticoPreview" class="text-muted small">
+                <em>Se mostrará aquí...</em>
+              </div>
+            </div>
+            
+            <div class="mb-2">
+              <small><strong>Medicamentos:</strong></small>
+              <div id="medicamentosPreview" class="text-muted small">
+                <em>Se mostrarán aquí...</em>
+              </div>
+            </div>
+            
+            <div class="mb-2">
+              <small><strong>Indicaciones:</strong></small>
+              <div id="indicacionesPreview" class="text-muted small">
+                <em>Se mostrarán aquí...</em>
+              </div>
+            </div>
+            
+            <div class="mt-4 text-end">
+              <div style="border-top: 1px solid #ccc; width: 150px; margin-left: auto; margin-top: 40px;">
+                <small class="text-muted">Médico Pediatra</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="mb-3">
-      <label class="form-label">Medicamentos (busca y selecciona)</label>
-      <select id="medicamentos" name="medicamentos" class="form-control" multiple required>
-        {% for med in medicamentos %}
-          <option value="{{ med.nombre }}">{{ med.nombre }}</option>
-        {% endfor %}
-      </select>
-      <small class="text-muted">Puedes seleccionar varios medicamentos.</small>
-    </div>
-    <button type="submit" class="btn btn-success">Guardar Receta</button>
-    <a href="/pacientes" class="btn btn-outline-secondary">Cancelar</a>
-  </form>
+  </div>
+</div>
+
+<style>
+.receta-preview {
+  font-family: 'Times New Roman', serif;
+  line-height: 1.4;
+}
+
+.card-header {
+  border-bottom: 2px solid rgba(255,255,255,0.2);
+}
+
+.form-label.fw-bold {
+  color: #495057;
+  font-size: 0.95rem;
+}
+
+.form-control:focus {
+  border-color: #0d6efd;
+  box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+}
+
+#medicamentos + .select2-container {
+  border: 1px solid #ced4da;
+  border-radius: 0.375rem;
+}
+
+.select2-selection--multiple {
+  border: none !important;
+  min-height: 38px;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+  background-color: #0d6efd;
+  border-color: #0d6efd;
+  color: white;
+  border-radius: 0.25rem;
+}
+</style>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  // Establecer fecha actual
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('fechaConsulta').value = today;
+  document.getElementById('fechaPreview').textContent = new Date().toLocaleDateString('es-MX');
+  
+  // Inicializar Select2
+  if (window.jQuery && $('#medicamentos').select2) {
+    $('#medicamentos').select2({ 
+      width: '100%', 
+      placeholder: 'Busque y seleccione medicamentos...',
+      allowClear: true
+    });
+  }
+  
+  // Vista previa en tiempo real
+  const diagnosticoInput = document.querySelector('textarea[name="diagnostico"]');
+  const indicacionesInput = document.querySelector('textarea[name="indicaciones"]');
+  const medicamentosSelect = document.getElementById('medicamentos');
+  
+  const diagnosticoPreview = document.getElementById('diagnosticoPreview');
+  const indicacionesPreview = document.getElementById('indicacionesPreview');
+  const medicamentosPreview = document.getElementById('medicamentosPreview');
+  
+  function updatePreview() {
+    // Actualizar diagnóstico
+    const diagnostico = diagnosticoInput.value.trim();
+    diagnosticoPreview.innerHTML = diagnostico ? 
+      `<small>${diagnostico}</small>` : 
+      '<em>Se mostrará aquí...</em>';
+    
+    // Actualizar indicaciones
+    const indicaciones = indicacionesInput.value.trim();
+    indicacionesPreview.innerHTML = indicaciones ? 
+      `<small>${indicaciones}</small>` : 
+      '<em>Se mostrarán aquí...</em>';
+    
+    // Actualizar medicamentos
+    const selectedMeds = Array.from(medicamentosSelect.selectedOptions).map(option => option.value);
+    if (selectedMeds.length > 0) {
+      medicamentosPreview.innerHTML = selectedMeds.map(med => `<small>• ${med}</small>`).join('<br>');
+    } else {
+      medicamentosPreview.innerHTML = '<em>Se mostrarán aquí...</em>';
+    }
+  }
+  
+  // Event listeners para vista previa
+  diagnosticoInput.addEventListener('input', updatePreview);
+  indicacionesInput.addEventListener('input', updatePreview);
+  medicamentosSelect.addEventListener('change', updatePreview);
+  
+  // Para Select2
+  if (window.jQuery) {
+    $('#medicamentos').on('change', updatePreview);
+  }
+});
+</script>
 {% endblock %}

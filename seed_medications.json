@@ -1,14 +1,18 @@
 [
   {
-    "nombre": "Paracetamol Infantil",
+    "nombre": "Paracetamol Infantil 160mg/5ml",
     "es_pediatrico": true
   },
   {
-    "nombre": "Ibuprofeno Pediátrico",
+    "nombre": "Ibuprofeno Pediátrico 100mg/5ml",
     "es_pediatrico": true
   },
   {
     "nombre": "Amoxicilina 250mg/5ml",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Amoxicilina + Ácido Clavulánico 250mg/5ml",
     "es_pediatrico": true
   },
   {
@@ -20,23 +24,227 @@
     "es_pediatrico": true
   },
   {
-    "nombre": "Loratadina Gotas",
+    "nombre": "Claritromicina 125mg/5ml",
     "es_pediatrico": true
   },
   {
-    "nombre": "Cetirizina Gotas",
+    "nombre": "Eritromicina 250mg/5ml",
     "es_pediatrico": true
   },
   {
-    "nombre": "Salbutamol Jarabe",
+    "nombre": "Trimetoprima + Sulfametoxazol 40mg+200mg/5ml",
     "es_pediatrico": true
   },
   {
-    "nombre": "Ambroxol Jarabe",
+    "nombre": "Loratadina Gotas 5mg/ml",
     "es_pediatrico": true
   },
   {
-    "nombre": "Ondansetrón Gotas",
+    "nombre": "Cetirizina Gotas 10mg/ml",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Desloratadina Jarabe 2.5mg/5ml",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Salbutamol Jarabe 2mg/5ml",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Ambroxol Jarabe 15mg/5ml",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Dextrometorfano Jarabe 15mg/5ml",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Guaifenesina Jarabe 100mg/5ml",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Ondansetrón Gotas 4mg/5ml",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Domperidona Gotas 1mg/ml",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Metoclopramida Gotas 5mg/ml",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Ranitidina Jarabe 75mg/5ml",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Omeprazol Granulado 10mg",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Simethicona Gotas 40mg/ml",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Lactulose Jarabe 667mg/ml",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Suero Oral (Sales de Rehidratación)",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Zinc Gotas 5mg/ml",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Hierro Gotas 25mg/ml",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Vitamina D3 Gotas 400 UI/gota",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Complejo B Jarabe",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Vitamina C Gotas 100mg/ml",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Prednisolona Jarabe 15mg/5ml",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Hidrocortisona Crema 1%",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Betametasona Crema 0.05%",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Clotrimazol Crema 1%",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Nistatina Suspensión 100,000 UI/ml",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Fluconazol Suspensión 40mg/ml",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Ketoconazol Shampoo 2%",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Óxido de Zinc Pomada",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Calamina Loción",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Suero Fisiológico Gotas Nasales",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Xilometazolina Gotas Nasales 0.05%",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Gentamicina Gotas Oftálmicas 0.3%",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Tobramicina Gotas Oftálmicas 0.3%",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Ciprofloxacino Gotas Oftálmicas 0.3%",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Gentamicina Gotas Óticas 0.3%",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Ciprofloxacino Gotas Óticas 0.2%",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Paracetamol Supositorios 80mg",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Paracetamol Supositorios 150mg",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Diclofenaco Supositorios 12.5mg",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Albendazol Suspensión 100mg/5ml",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Mebendazol Suspensión 100mg/5ml",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Nitazoxanida Suspensión 100mg/5ml",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Metronidazol Suspensión 125mg/5ml",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Probióticos Pediátricos",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Acetaminofén + Pseudoefedrina Jarabe",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Bromhexina Jarabe 4mg/5ml",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Carbocisteína Jarabe 250mg/5ml",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Montelukast Granulado 4mg",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Budesonida Suspensión para Nebulizar 0.25mg/ml",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Ipratropio Bromuro Solución para Nebulizar",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Fenobarbital Gotas 40mg/ml",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Ácido Valproico Jarabe 250mg/5ml",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Carbamazepina Suspensión 100mg/5ml",
     "es_pediatrico": true
   }
 ]
