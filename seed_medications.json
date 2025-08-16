@@ -36,6 +36,22 @@
     "es_pediatrico": true
   },
   {
+    "nombre": "Cefixima 100mg/5ml",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Ceftriaxona 250mg inyectable",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Ampicilina 250mg/5ml",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Clindamicina 75mg/5ml",
+    "es_pediatrico": true
+  },
+  {
     "nombre": "Loratadina Gotas 5mg/ml",
     "es_pediatrico": true
   },
@@ -45,6 +61,14 @@
   },
   {
     "nombre": "Desloratadina Jarabe 2.5mg/5ml",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Difenhidramina Jarabe 12.5mg/5ml",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Hidroxizina Jarabe 10mg/5ml",
     "es_pediatrico": true
   },
   {
@@ -64,6 +88,18 @@
     "es_pediatrico": true
   },
   {
+    "nombre": "Bromhexina Jarabe 4mg/5ml",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Carbocisteína Jarabe 250mg/5ml",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Acetilcisteína Jarabe 100mg/5ml",
+    "es_pediatrico": true
+  },
+  {
     "nombre": "Ondansetrón Gotas 4mg/5ml",
     "es_pediatrico": true
   },
@@ -76,6 +112,10 @@
     "es_pediatrico": true
   },
   {
+    "nombre": "Dimenhidrinato Jarabe 12.5mg/5ml",
+    "es_pediatrico": true
+  },
+  {
     "nombre": "Ranitidina Jarabe 75mg/5ml",
     "es_pediatrico": true
   },
@@ -84,11 +124,19 @@
     "es_pediatrico": true
   },
   {
+    "nombre": "Lansoprazol Granulado 15mg",
+    "es_pediatrico": true
+  },
+  {
     "nombre": "Simethicona Gotas 40mg/ml",
     "es_pediatrico": true
   },
   {
     "nombre": "Lactulose Jarabe 667mg/ml",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Polietilenglicol 3350 Polvo",
     "es_pediatrico": true
   },
   {
@@ -116,7 +164,27 @@
     "es_pediatrico": true
   },
   {
+    "nombre": "Multivitamínico Pediátrico Gotas",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Ácido Fólico Gotas 2.5mg/ml",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Calcio + Vitamina D3 Jarabe",
+    "es_pediatrico": true
+  },
+  {
     "nombre": "Prednisolona Jarabe 15mg/5ml",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Dexametasona Gotas 0.5mg/5ml",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Betametasona Gotas 0.5mg/5ml",
     "es_pediatrico": true
   },
   {
@@ -125,6 +193,10 @@
   },
   {
     "nombre": "Betametasona Crema 0.05%",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Mometasona Crema 0.1%",
     "es_pediatrico": true
   },
   {
@@ -144,6 +216,14 @@
     "es_pediatrico": true
   },
   {
+    "nombre": "Terbinafina Crema 1%",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Miconazol Crema 2%",
+    "es_pediatrico": true
+  },
+  {
     "nombre": "Óxido de Zinc Pomada",
     "es_pediatrico": true
   },
@@ -152,11 +232,23 @@
     "es_pediatrico": true
   },
   {
+    "nombre": "Pasta Lassar",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Violeta de Genciana 1%",
+    "es_pediatrico": true
+  },
+  {
     "nombre": "Suero Fisiológico Gotas Nasales",
     "es_pediatrico": true
   },
   {
     "nombre": "Xilometazolina Gotas Nasales 0.05%",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Oximetazolina Gotas Nasales 0.025%",
     "es_pediatrico": true
   },
   {
@@ -172,11 +264,27 @@
     "es_pediatrico": true
   },
   {
+    "nombre": "Cloranfenicol Gotas Oftálmicas 0.5%",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Dexametasona + Tobramicina Gotas Oftálmicas",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Lágrimas Artificiales",
+    "es_pediatrico": true
+  },
+  {
     "nombre": "Gentamicina Gotas Óticas 0.3%",
     "es_pediatrico": true
   },
   {
     "nombre": "Ciprofloxacino Gotas Óticas 0.2%",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Polimixina B + Neomicina Gotas Óticas",
     "es_pediatrico": true
   },
   {
@@ -188,7 +296,15 @@
     "es_pediatrico": true
   },
   {
+    "nombre": "Paracetamol Supositorios 300mg",
+    "es_pediatrico": true
+  },
+  {
     "nombre": "Diclofenaco Supositorios 12.5mg",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Indometacina Supositorios 50mg",
     "es_pediatrico": true
   },
   {
@@ -208,19 +324,27 @@
     "es_pediatrico": true
   },
   {
+    "nombre": "Piperazina Jarabe 500mg/5ml",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Pirantel Suspensión 250mg/5ml",
+    "es_pediatrico": true
+  },
+  {
     "nombre": "Probióticos Pediátricos",
     "es_pediatrico": true
   },
   {
+    "nombre": "Lactobacillus Acidophilus Gotas",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Saccharomyces Boulardii Polvo",
+    "es_pediatrico": true
+  },
+  {
     "nombre": "Acetaminofén + Pseudoefedrina Jarabe",
-    "es_pediatrico": true
-  },
-  {
-    "nombre": "Bromhexina Jarabe 4mg/5ml",
-    "es_pediatrico": true
-  },
-  {
-    "nombre": "Carbocisteína Jarabe 250mg/5ml",
     "es_pediatrico": true
   },
   {
@@ -236,6 +360,10 @@
     "es_pediatrico": true
   },
   {
+    "nombre": "Salbutamol Solución para Nebulizar 5mg/ml",
+    "es_pediatrico": true
+  },
+  {
     "nombre": "Fenobarbital Gotas 40mg/ml",
     "es_pediatrico": true
   },
@@ -245,6 +373,186 @@
   },
   {
     "nombre": "Carbamazepina Suspensión 100mg/5ml",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Fenitoína Suspensión 125mg/5ml",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Levetiracetam Solución 100mg/ml",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Diazepam Gotas 2mg/ml",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Clonazepam Gotas 2.5mg/ml",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Furosemida Solución 10mg/ml",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Espironolactona Suspensión 25mg/5ml",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Captopril Solución 5mg/ml",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Digoxina Gotas 0.05mg/ml",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Propranolol Solución 5mg/5ml",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Amlodipino Suspensión 1mg/ml",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Insulina NPH Pediátrica",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Insulina Rápida Pediátrica",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Levotiroxina Gotas 25mcg/ml",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Metimazol Suspensión 5mg/5ml",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Hidroclorotiazida Suspensión 10mg/5ml",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Ácido Ursodesoxicólico Suspensión 250mg/5ml",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Mesalazina Granulado 500mg",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Sulfasalazina Suspensión 250mg/5ml",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Ketotifeno Jarabe 1mg/5ml",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Cromoglicato de Sodio Solución Nasal 2%",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Beclometasona Spray Nasal 50mcg",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Fluticasona Spray Nasal 50mcg",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Mometasona Spray Nasal 50mcg",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Epinefrina Auto-inyector 0.15mg",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Epinefrina Auto-inyector 0.3mg",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Atropina Gotas Oftálmicas 1%",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Tropicamida Gotas Oftálmicas 1%",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Timolol Gotas Oftálmicas 0.25%",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Acetazolamida Suspensión 250mg/5ml",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Manitol Solución 20%",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Desmopresina Spray Nasal 10mcg",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Hormona de Crecimiento Inyectable",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Testosterona Gel 1%",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Estrógenos Conjugados Crema",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Melatonina Gotas 1mg/ml",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Risperidona Solución 1mg/ml",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Aripiprazol Solución 1mg/ml",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Quetiapina Suspensión 20mg/ml",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Olanzapina Dispersable 5mg",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Sertralina Solución 20mg/ml",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Fluoxetina Solución 20mg/5ml",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Metilfenidato Solución 10mg/5ml",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Atomoxetina Solución 4mg/ml",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Clonidina Gotas 0.1mg/ml",
+    "es_pediatrico": true
+  },
+  {
+    "nombre": "Guanfacina Suspensión 1mg/ml",
     "es_pediatrico": true
   }
 ]
