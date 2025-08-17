@@ -7,6 +7,13 @@ from config import MONGO_URI, DB_NAME, HOST, PORT, DEBUG
 app = Flask(__name__)
 app.secret_key = "cambia-esta-clave"
 
+# Filtro personalizado para formatear fechas
+@app.template_filter('strftime')
+def strftime_filter(date, format='%d/%m/%Y'):
+    if isinstance(date, str) and date == 'now':
+        return datetime.now().strftime(format)
+    return date.strftime(format) if date else ''
+
 # Conexión a MongoDB
 client = MongoClient(MONGO_URI)
 db = client[DB_NAME]
@@ -117,7 +124,12 @@ def receta_print(paciente_id, indice):
         flash("Receta no encontrada", "danger")
         return redirect(url_for("historial", paciente_id=paciente_id))
     receta = paciente["historial"][indice]
-    return render_template("receta_print.html", paciente=paciente, receta=receta, indice=indice)
+    fecha_actual = datetime.now()
+    return render_template("receta_print.html", 
+                         paciente=paciente, 
+                         receta=receta, 
+                         indice=indice,
+                         fecha_actual=fecha_actual)
 
 if __name__ == "__main__":
     app.run(host=HOST, port=PORT, debug=DEBUG)
