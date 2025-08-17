@@ -1,42 +1,572 @@
 {% extends "base.html" %}
 {% block content %}
-  <div class="d-flex justify-content-between align-items-center mb-3">
-    <h2 class="mb-0">Pacientes</h2>
+<div class="patients-container">
+  <!-- Header Section -->
+  <div class="page-header">
+    <div class="header-content">
+      <div class="title-section">
+        <h1 class="page-title">
+          <i class="fas fa-users text-primary me-3"></i>
+          Gestión de Pacientes
+        </h1>
+        <p class="page-subtitle">Administra la información de tus pacientes pediátricos</p>
+      </div>
+      <div class="header-stats">
+        <div class="stat-card">
+          <div class="stat-number">{{ pacientes|length }}</div>
+          <div class="stat-label">Pacientes Registrados</div>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <form method="POST" action="/pacientes/nuevo" class="row g-3 mb-4">
-    <div class="col-md-4">
-      <input type="text" name="nombre" placeholder="Nombre" required class="form-control">
+  <!-- Add Patient Form -->
+  <div class="add-patient-section">
+    <div class="form-card">
+      <div class="form-header">
+        <h3 class="form-title">
+          <i class="fas fa-user-plus me-2"></i>
+          Registrar Nuevo Paciente
+        </h3>
+      </div>
+      <form method="POST" action="/pacientes/nuevo" class="patient-form">
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">
+              <i class="fas fa-child me-2"></i>
+              Nombre Completo
+            </label>
+            <input type="text" name="nombre" class="form-input" placeholder="Ingrese el nombre completo del paciente" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">
+              <i class="fas fa-birthday-cake me-2"></i>
+              Edad
+            </label>
+            <input type="text" name="edad" class="form-input" placeholder="Ej: 3 años, 6 meses">
+          </div>
+          <div class="form-group">
+            <label class="form-label">
+              <i class="fas fa-phone me-2"></i>
+              Teléfono de Contacto
+            </label>
+            <input type="tel" name="telefono" class="form-input" placeholder="Número de teléfono">
+          </div>
+          <div class="form-group form-actions">
+            <button type="submit" class="btn-add-patient">
+              <i class="fas fa-plus me-2"></i>
+              Agregar Paciente
+            </button>
+          </div>
+        </div>
+      </form>
     </div>
-    <div class="col-md-2">
-      <input type="text" name="edad" placeholder="Edad" class="form-control">
-    </div>
-    <div class="col-md-3">
-      <input type="text" name="telefono" placeholder="Teléfono" class="form-control">
-    </div>
-    <div class="col-md-2">
-      <button type="submit" class="btn btn-success">Agregar Paciente</button>
-    </div>
-  </form>
-
-  <div class="table-responsive">
-    <table class="table table-striped align-middle">
-      <thead>
-        <tr><th>Nombre</th><th>Edad</th><th>Teléfono</th><th>Acciones</th></tr>
-      </thead>
-      <tbody>
-        {% for p in pacientes %}
-          <tr>
-            <td>{{ p.nombre }}</td>
-            <td>{{ p.edad }}</td>
-            <td>{{ p.telefono }}</td>
-            <td>
-              <a class="btn btn-primary btn-sm" href="/receta/{{ p._id }}">Crear Receta</a>
-              <a class="btn btn-secondary btn-sm" href="/historial/{{ p._id }}">Historial</a>
-            </td>
-          </tr>
-        {% endfor %}
-      </tbody>
-    </table>
   </div>
+
+  <!-- Patients Table -->
+  <div class="patients-table-section">
+    <div class="table-card">
+      <div class="table-header">
+        <h3 class="table-title">
+          <i class="fas fa-list me-2"></i>
+          Lista de Pacientes
+        </h3>
+        <div class="table-actions">
+          <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="searchInput" placeholder="Buscar paciente..." class="search-input">
+          </div>
+        </div>
+      </div>
+      
+      {% if pacientes %}
+      <div class="table-responsive">
+        <table class="patients-table" id="patientsTable">
+          <thead>
+            <tr>
+              <th class="th-avatar">
+                <i class="fas fa-user"></i>
+              </th>
+              <th class="th-name">Nombre del Paciente</th>
+              <th class="th-age">Edad</th>
+              <th class="th-phone">Teléfono</th>
+              <th class="th-actions">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for p in pacientes %}
+            <tr class="patient-row" data-patient-name="{{ p.nombre.lower() }}">
+              <td class="td-avatar">
+                <div class="patient-avatar">
+                  <i class="fas fa-child"></i>
+                </div>
+              </td>
+              <td class="td-name">
+                <div class="patient-info">
+                  <div class="patient-name">{{ p.nombre }}</div>
+                  <div class="patient-id">ID: {{ p._id }}</div>
+                </div>
+              </td>
+              <td class="td-age">
+                <span class="age-badge">{{ p.edad or 'No especificada' }}</span>
+              </td>
+              <td class="td-phone">
+                <div class="phone-info">
+                  {% if p.telefono %}
+                    <i class="fas fa-phone me-2"></i>
+                    <span>{{ p.telefono }}</span>
+                  {% else %}
+                    <span class="no-phone">Sin teléfono</span>
+                  {% endif %}
+                </div>
+              </td>
+              <td class="td-actions">
+                <div class="action-buttons">
+                  <a href="/receta/{{ p._id }}" class="btn-action btn-prescription" title="Crear Receta">
+                    <i class="fas fa-prescription-bottle-alt"></i>
+                    <span>Receta</span>
+                  </a>
+                  <a href="/historial/{{ p._id }}" class="btn-action btn-history" title="Ver Historial">
+                    <i class="fas fa-history"></i>
+                    <span>Historial</span>
+                  </a>
+                </div>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+      <div class="empty-state">
+        <div class="empty-icon">
+          <i class="fas fa-user-friends"></i>
+        </div>
+        <h3>No hay pacientes registrados</h3>
+        <p>Comienza agregando tu primer paciente usando el formulario de arriba.</p>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<style>
+.patients-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Page Header */
+.page-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 16px;
+  padding: 30px;
+  margin-bottom: 30px;
+  color: white;
+  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.page-title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin: 0;
+  display: flex;
+  align-items: center;
+}
+
+.page-subtitle {
+  margin: 8px 0 0 0;
+  opacity: 0.9;
+  font-size: 1.1rem;
+}
+
+.header-stats {
+  text-align: center;
+}
+
+.stat-card {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  padding: 20px;
+  backdrop-filter: blur(10px);
+}
+
+.stat-number {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+/* Add Patient Form */
+.add-patient-section {
+  margin-bottom: 30px;
+}
+
+.form-card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+.form-header {
+  background: #f8f9ff;
+  padding: 20px 30px;
+  border-bottom: 1px solid #e3e8ff;
+}
+
+.form-title {
+  margin: 0;
+  color: #4c63d2;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.patient-form {
+  padding: 30px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr auto;
+  gap: 20px;
+  align-items: end;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-label {
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+}
+
+.form-input {
+  padding: 12px 16px;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background: #fafafa;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #4c63d2;
+  background: white;
+  box-shadow: 0 0 0 3px rgba(76, 99, 210, 0.1);
+}
+
+.btn-add-patient {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.btn-add-patient:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
+}
+
+/* Patients Table */
+.table-card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+.table-header {
+  background: #f8f9ff;
+  padding: 20px 30px;
+  border-bottom: 1px solid #e3e8ff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.table-title {
+  margin: 0;
+  color: #4c63d2;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.search-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-box i {
+  position: absolute;
+  left: 12px;
+  color: #9ca3af;
+  z-index: 1;
+}
+
+.search-input {
+  padding: 10px 12px 10px 40px;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  width: 250px;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #4c63d2;
+  box-shadow: 0 0 0 3px rgba(76, 99, 210, 0.1);
+}
+
+.table-responsive {
+  overflow-x: auto;
+}
+
+.patients-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.patients-table th {
+  background: #f9fafb;
+  padding: 16px 20px;
+  text-align: left;
+  font-weight: 600;
+  color: #374151;
+  font-size: 0.9rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.patients-table td {
+  padding: 20px;
+  border-bottom: 1px solid #f3f4f6;
+  vertical-align: middle;
+}
+
+.patient-row {
+  transition: all 0.3s ease;
+}
+
+.patient-row:hover {
+  background: #f8f9ff;
+}
+
+.patient-avatar {
+  width: 45px;
+  height: 45px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.2rem;
+}
+
+.patient-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.patient-name {
+  font-weight: 600;
+  color: #111827;
+  font-size: 1rem;
+}
+
+.patient-id {
+  font-size: 0.8rem;
+  color: #6b7280;
+  margin-top: 2px;
+}
+
+.age-badge {
+  background: #dbeafe;
+  color: #1e40af;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.phone-info {
+  display: flex;
+  align-items: center;
+  color: #374151;
+}
+
+.no-phone {
+  color: #9ca3af;
+  font-style: italic;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-action {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.btn-prescription {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.btn-prescription:hover {
+  background: #1e40af;
+  color: white;
+  transform: translateY(-1px);
+}
+
+.btn-history {
+  background: #f3e8ff;
+  color: #7c3aed;
+}
+
+.btn-history:hover {
+  background: #7c3aed;
+  color: white;
+  transform: translateY(-1px);
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: #6b7280;
+}
+
+.empty-icon {
+  font-size: 4rem;
+  margin-bottom: 20px;
+  opacity: 0.5;
+}
+
+.empty-state h3 {
+  margin: 0 0 10px 0;
+  color: #374151;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .header-content {
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+  }
+  
+  .form-grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+  
+  .table-header {
+    flex-direction: column;
+    gap: 15px;
+    align-items: stretch;
+  }
+  
+  .search-input {
+    width: 100%;
+  }
+  
+  .action-buttons {
+    flex-direction: column;
+  }
+  
+  .btn-action span {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .patients-container {
+    padding: 0 10px;
+  }
+  
+  .page-header {
+    padding: 20px;
+  }
+  
+  .page-title {
+    font-size: 1.8rem;
+  }
+  
+  .patient-form {
+    padding: 20px;
+  }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Search functionality
+  const searchInput = document.getElementById('searchInput');
+  const patientRows = document.querySelectorAll('.patient-row');
+  
+  if (searchInput) {
+    searchInput.addEventListener('input', function() {
+      const searchTerm = this.value.toLowerCase().trim();
+      
+      patientRows.forEach(row => {
+        const patientName = row.getAttribute('data-patient-name');
+        if (patientName.includes(searchTerm)) {
+          row.style.display = '';
+        } else {
+          row.style.display = 'none';
+        }
+      });
+    });
+  }
+  
+  // Form validation
+  const form = document.querySelector('.patient-form');
+  if (form) {
+    form.addEventListener('submit', function(e) {
+      const nameInput = form.querySelector('input[name="nombre"]');
+      if (!nameInput.value.trim()) {
+        e.preventDefault();
+        alert('Por favor ingrese el nombre del paciente');
+        nameInput.focus();
+      }
+    });
+  }
+});
+</script>
 {% endblock %}
