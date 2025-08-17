@@ -131,5 +131,231 @@ def receta_print(paciente_id, indice):
                          indice=indice,
                          fecha_actual=fecha_actual)
 
+# ---------- CHATBOT Y RESERVAS ----------
+@app.route("/chatbot")
+def chatbot():
+    return render_template("chatbot.html")
+
+@app.route("/enviar-preconsulta", methods=["POST"])
+def enviar_preconsulta():
+    try:
+        # Recopilar datos del formulario
+        datos = {
+            'motivo_consulta': request.form.get('motivo_consulta'),
+            'fiebre_actual': request.form.get('fiebre_actual'),
+            'duracion_sintomas': request.form.get('duracion_sintomas'),
+            'evolucion_sintomas': request.form.get('evolucion_sintomas'),
+            'edad_nino': request.form.get('edad_nino'),
+            'alimentacion': request.form.get('alimentacion'),
+            'llamada_urgente': request.form.get('llamada_urgente'),
+            'telefono_contacto': request.form.get('telefono_contacto'),
+            'informacion_adicional': request.form.get('informacion_adicional')
+        }
+        
+        # Crear el mensaje de correo
+        asunto = f"📋 Nueva Pre-Consulta Pediátrica - {datos['edad_nino']}"
+        
+        cuerpo_html = f"""
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #f8f9fa; padding: 20px;">
+            <div style="background: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                <div style="text-align: center; margin-bottom: 30px; padding-bottom: 20px; border-bottom: 2px solid #4c63d2;">
+                    <h2 style="color: #4c63d2; margin: 0;">🩺 Nueva Pre-Consulta Pediátrica</h2>
+                    <p style="color: #666; margin: 5px 0;">Información recopilada del asistente virtual</p>
+                    <small style="color: #999;">Fecha: {datetime.now().strftime('%d/%m/%Y %H:%M')}</small>
+                </div>
+                
+                <div style="margin-bottom: 25px;">
+                    <h3 style="color: #4c63d2; border-bottom: 1px solid #eee; padding-bottom: 5px;">
+                        👶 Información del Paciente
+                    </h3>
+                    <p><strong>Edad:</strong> {datos['edad_nino']}</p>
+                </div>
+                
+                <div style="margin-bottom: 25px;">
+                    <h3 style="color: #4c63d2; border-bottom: 1px solid #eee; padding-bottom: 5px;">
+                        🏥 Motivo de Consulta
+                    </h3>
+                    <p><strong>Motivo principal:</strong> {datos['motivo_consulta']}</p>
+                </div>
+                
+                <div style="margin-bottom: 25px;">
+                    <h3 style="color: #4c63d2; border-bottom: 1px solid #eee; padding-bottom: 5px;">
+                        🌡️ Estado Actual
+                    </h3>
+                    <p><strong>Fiebre:</strong> {datos['fiebre_actual']}</p>
+                    <p><strong>Duración de síntomas:</strong> {datos['duracion_sintomas']}</p>
+                    <p><strong>Evolución:</strong> {datos['evolucion_sintomas']}</p>
+                    <p><strong>Alimentación:</strong> {datos['alimentacion']}</p>
+                </div>
+                
+                <div style="margin-bottom: 25px;">
+                    <h3 style="color: #4c63d2; border-bottom: 1px solid #eee; padding-bottom: 5px;">
+                        📞 Contacto
+                    </h3>
+                    <p><strong>Llamada urgente:</strong> {datos['llamada_urgente']}</p>
+                    {f"<p><strong>Teléfono:</strong> {datos['telefono_contacto']}</p>" if datos['telefono_contacto'] else ""}
+                </div>
+                
+                {f'''<div style="margin-bottom: 25px;">
+                    <h3 style="color: #4c63d2; border-bottom: 1px solid #eee; padding-bottom: 5px;">
+                        📝 Información Adicional
+                    </h3>
+                    <p>{datos['informacion_adicional']}</p>
+                </div>''' if datos['informacion_adicional'] else ''}
+                
+                <div style="background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 5px; padding: 15px; margin-top: 20px;">
+                    <p style="margin: 0; color: #856404;">
+                        <strong>⚠️ Recordatorio:</strong> Esta información fue recopilada mediante el asistente virtual. 
+                        Se recomienda confirmar los datos durante la consulta presencial.
+                    </p>
+                </div>
+            </div>
+        </div>
+        """
+        
+        # Enviar correo
+        msg = Message(
+            subject=asunto,
+            sender=app.config['MAIL_USERNAME'],
+            recipients=[DOCTOR_EMAIL],
+            html=cuerpo_html
+        )
+        
+        mail.send(msg)
+        
+        return {"success": True, "message": "Información enviada correctamente"}
+        
+    except Exception as e:
+        print(f"Error al enviar correo: {e}")
+        return {"success": False, "error": str(e)}, 500
+
+@app.route("/reservar-cita")
+def reservar_cita():
+    return render_template("reservar_cita.html")
+
+@app.route("/procesar-reserva", methods=["POST"])
+def procesar_reserva():
+    try:
+        # Recopilar datos del formulario
+        datos_reserva = {
+            'nombre_paciente': request.form.get('nombre_paciente'),
+            'edad': request.form.get('edad'),
+            'sexo': request.form.get('sexo'),
+            'nombre_responsable': request.form.get('nombre_responsable'),
+            'telefono': request.form.get('telefono'),
+            'email': request.form.get('email'),
+            'fecha_preferida': request.form.get('fecha_preferida'),
+            'hora_preferida': request.form.get('hora_preferida'),
+            'motivo_consulta': request.form.get('motivo_consulta')
+        }
+        
+        # Crear el mensaje de correo para el doctor
+        asunto = f"📅 Nueva Solicitud de Cita - {datos_reserva['nombre_paciente']}"
+        
+        cuerpo_html = f"""
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #f8f9fa; padding: 20px;">
+            <div style="background: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                <div style="text-align: center; margin-bottom: 30px; padding-bottom: 20px; border-bottom: 2px solid #28a745;">
+                    <h2 style="color: #28a745; margin: 0;">📅 Nueva Solicitud de Cita</h2>
+                    <p style="color: #666; margin: 5px 0;">Reserva de consulta pediátrica</p>
+                    <small style="color: #999;">Fecha de solicitud: {datetime.now().strftime('%d/%m/%Y %H:%M')}</small>
+                </div>
+                
+                <div style="margin-bottom: 25px;">
+                    <h3 style="color: #28a745; border-bottom: 1px solid #eee; padding-bottom: 5px;">
+                        👶 Datos del Paciente
+                    </h3>
+                    <p><strong>Nombre:</strong> {datos_reserva['nombre_paciente']}</p>
+                    <p><strong>Edad:</strong> {datos_reserva['edad'] or 'No especificada'}</p>
+                    <p><strong>Sexo:</strong> {datos_reserva['sexo'] or 'No especificado'}</p>
+                </div>
+                
+                <div style="margin-bottom: 25px;">
+                    <h3 style="color: #28a745; border-bottom: 1px solid #eee; padding-bottom: 5px;">
+                        👨‍👩‍👧‍👦 Datos del Responsable
+                    </h3>
+                    <p><strong>Nombre:</strong> {datos_reserva['nombre_responsable']}</p>
+                    <p><strong>Teléfono:</strong> {datos_reserva['telefono']}</p>
+                    {f"<p><strong>Email:</strong> {datos_reserva['email']}</p>" if datos_reserva['email'] else ""}
+                </div>
+                
+                <div style="margin-bottom: 25px;">
+                    <h3 style="color: #28a745; border-bottom: 1px solid #eee; padding-bottom: 5px;">
+                        📅 Cita Solicitada
+                    </h3>
+                    <p><strong>Fecha preferida:</strong> {datos_reserva['fecha_preferida']}</p>
+                    <p><strong>Hora preferida:</strong> {datos_reserva['hora_preferida']}</p>
+                </div>
+                
+                {f'''<div style="margin-bottom: 25px;">
+                    <h3 style="color: #28a745; border-bottom: 1px solid #eee; padding-bottom: 5px;">
+                        🏥 Motivo de Consulta
+                    </h3>
+                    <p>{datos_reserva['motivo_consulta']}</p>
+                </div>''' if datos_reserva['motivo_consulta'] else ''}
+                
+                <div style="background: #d4edda; border: 1px solid #c3e6cb; border-radius: 5px; padding: 15px; margin-top: 20px;">
+                    <p style="margin: 0; color: #155724;">
+                        <strong>📞 Acción requerida:</strong> Contactar al responsable para confirmar la disponibilidad 
+                        y agendar la cita en el horario solicitado.
+                    </p>
+                </div>
+            </div>
+        </div>
+        """
+        
+        # Enviar correo al doctor
+        msg = Message(
+            subject=asunto,
+            sender=app.config['MAIL_USERNAME'],
+            recipients=[DOCTOR_EMAIL],
+            html=cuerpo_html
+        )
+        
+        mail.send(msg)
+        
+        # Enviar correo de confirmación al paciente (si proporcionó email)
+        if datos_reserva['email']:
+            msg_paciente = Message(
+                subject="✅ Solicitud de Cita Recibida - Consultorio Pediátrico",
+                sender=app.config['MAIL_USERNAME'],
+                recipients=[datos_reserva['email']],
+                html=f"""
+                <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #f8f9fa; padding: 20px;">
+                    <div style="background: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                        <div style="text-align: center; margin-bottom: 30px;">
+                            <h2 style="color: #4c63d2; margin: 0;">✅ Solicitud Recibida</h2>
+                            <p style="color: #666;">Consultorio Pediátrico</p>
+                        </div>
+                        
+                        <p>Estimado/a <strong>{datos_reserva['nombre_responsable']}</strong>,</p>
+                        
+                        <p>Hemos recibido su solicitud de cita para <strong>{datos_reserva['nombre_paciente']}</strong>.</p>
+                        
+                        <div style="background: #f8f9ff; border-left: 4px solid #4c63d2; padding: 15px; margin: 20px 0;">
+                            <p><strong>Fecha solicitada:</strong> {datos_reserva['fecha_preferida']}</p>
+                            <p><strong>Hora solicitada:</strong> {datos_reserva['hora_preferida']}</p>
+                        </div>
+                        
+                        <p>Nos pondremos en contacto con usted en las próximas horas para confirmar la disponibilidad y agendar su cita.</p>
+                        
+                        <p>Si tiene alguna urgencia, no dude en contactarnos directamente.</p>
+                        
+                        <p>Saludos cordiales,<br>
+                        <strong>Consultorio Pediátrico</strong></p>
+                    </div>
+                </div>
+                """
+            )
+            mail.send(msg_paciente)
+        
+        flash("¡Solicitud de cita enviada correctamente! Nos pondremos en contacto contigo pronto.", "success")
+        return redirect(url_for("index"))
+        
+    except Exception as e:
+        print(f"Error al procesar reserva: {e}")
+        flash("Error al enviar la solicitud. Por favor intenta nuevamente.", "danger")
+        return redirect(url_for("reservar_cita"))
+
 if __name__ == "__main__":
     app.run(host=HOST, port=PORT, debug=DEBUG)

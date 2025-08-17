@@ -1,0 +1,240 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container-fluid">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="card shadow-lg border-0">
+        <div class="card-header bg-primary text-white text-center py-4">
+          <h2 class="mb-0">
+            <i class="fas fa-calendar-plus me-3"></i>
+            Reservar Consulta Pediátrica
+          </h2>
+          <p class="mb-0 mt-2">Agenda tu cita de manera fácil y rápida</p>
+        </div>
+        
+        <div class="card-body p-5">
+          <div class="row">
+            <!-- Información del consultorio -->
+            <div class="col-md-6">
+              <div class="mb-4">
+                <h4 class="text-primary mb-3">
+                  <i class="fas fa-info-circle me-2"></i>
+                  Información del Consultorio
+                </h4>
+                
+                <div class="info-item mb-3">
+                  <i class="fas fa-user-md text-primary me-2"></i>
+                  <strong>Dr. [Tu Nombre]</strong><br>
+                  <small class="text-muted">Médico Pediatra Certificado</small>
+                </div>
+                
+                <div class="info-item mb-3">
+                  <i class="fas fa-map-marker-alt text-primary me-2"></i>
+                  <strong>Dirección:</strong><br>
+                  <small class="text-muted">[Tu dirección completa]</small>
+                </div>
+                
+                <div class="info-item mb-3">
+                  <i class="fas fa-phone text-primary me-2"></i>
+                  <strong>Teléfono:</strong><br>
+                  <small class="text-muted">[Tu número de teléfono]</small>
+                </div>
+                
+                <div class="info-item mb-3">
+                  <i class="fas fa-clock text-primary me-2"></i>
+                  <strong>Horarios de Atención:</strong><br>
+                  <small class="text-muted">
+                    Lunes a Viernes: 9:00 AM - 6:00 PM<br>
+                    Sábados: 9:00 AM - 2:00 PM
+                  </small>
+                </div>
+                
+                <div class="info-item mb-3">
+                  <i class="fas fa-dollar-sign text-primary me-2"></i>
+                  <strong>Costo de Consulta:</strong><br>
+                  <small class="text-muted">$[Tu tarifa] MXN</small>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Formulario de reserva -->
+            <div class="col-md-6">
+              <h4 class="text-primary mb-3">
+                <i class="fas fa-calendar-check me-2"></i>
+                Datos para la Cita
+              </h4>
+              
+              <form method="POST" action="/procesar-reserva">
+                <div class="mb-3">
+                  <label class="form-label fw-bold">
+                    <i class="fas fa-child me-2"></i>Nombre del Paciente
+                  </label>
+                  <input type="text" class="form-control" name="nombre_paciente" required 
+                         placeholder="Nombre completo del niño/a">
+                </div>
+                
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <label class="form-label fw-bold">
+                      <i class="fas fa-birthday-cake me-2"></i>Edad
+                    </label>
+                    <input type="text" class="form-control" name="edad" 
+                           placeholder="Ej: 3 años, 6 meses">
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label fw-bold">
+                      <i class="fas fa-venus-mars me-2"></i>Sexo
+                    </label>
+                    <select class="form-control" name="sexo">
+                      <option value="">Seleccionar</option>
+                      <option value="Masculino">Masculino</option>
+                      <option value="Femenino">Femenino</option>
+                    </select>
+                  </div>
+                </div>
+                
+                <div class="mb-3">
+                  <label class="form-label fw-bold">
+                    <i class="fas fa-user me-2"></i>Nombre del Responsable
+                  </label>
+                  <input type="text" class="form-control" name="nombre_responsable" required 
+                         placeholder="Nombre del padre/madre/tutor">
+                </div>
+                
+                <div class="mb-3">
+                  <label class="form-label fw-bold">
+                    <i class="fas fa-phone me-2"></i>Teléfono de Contacto
+                  </label>
+                  <input type="tel" class="form-control" name="telefono" required 
+                         placeholder="Número de teléfono">
+                </div>
+                
+                <div class="mb-3">
+                  <label class="form-label fw-bold">
+                    <i class="fas fa-envelope me-2"></i>Correo Electrónico
+                  </label>
+                  <input type="email" class="form-control" name="email" 
+                         placeholder="correo@ejemplo.com (opcional)">
+                </div>
+                
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <label class="form-label fw-bold">
+                      <i class="fas fa-calendar me-2"></i>Fecha Preferida
+                    </label>
+                    <input type="date" class="form-control" name="fecha_preferida" required>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label fw-bold">
+                      <i class="fas fa-clock me-2"></i>Hora Preferida
+                    </label>
+                    <select class="form-control" name="hora_preferida" required>
+                      <option value="">Seleccionar hora</option>
+                      <option value="09:00">09:00 AM</option>
+                      <option value="09:30">09:30 AM</option>
+                      <option value="10:00">10:00 AM</option>
+                      <option value="10:30">10:30 AM</option>
+                      <option value="11:00">11:00 AM</option>
+                      <option value="11:30">11:30 AM</option>
+                      <option value="12:00">12:00 PM</option>
+                      <option value="12:30">12:30 PM</option>
+                      <option value="13:00">01:00 PM</option>
+                      <option value="13:30">01:30 PM</option>
+                      <option value="14:00">02:00 PM</option>
+                      <option value="14:30">02:30 PM</option>
+                      <option value="15:00">03:00 PM</option>
+                      <option value="15:30">03:30 PM</option>
+                      <option value="16:00">04:00 PM</option>
+                      <option value="16:30">04:30 PM</option>
+                      <option value="17:00">05:00 PM</option>
+                      <option value="17:30">05:30 PM</option>
+                    </select>
+                  </div>
+                </div>
+                
+                <div class="mb-3">
+                  <label class="form-label fw-bold">
+                    <i class="fas fa-notes-medical me-2"></i>Motivo de la Consulta
+                  </label>
+                  <textarea class="form-control" name="motivo_consulta" rows="3" 
+                            placeholder="Describe brevemente el motivo de la consulta..."></textarea>
+                </div>
+                
+                <div class="mb-4">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="terminos" required>
+                    <label class="form-check-label" for="terminos">
+                      Acepto los términos y condiciones del consultorio y autorizo el tratamiento de mis datos personales.
+                    </label>
+                  </div>
+                </div>
+                
+                <div class="d-grid gap-2">
+                  <button type="submit" class="btn btn-primary btn-lg">
+                    <i class="fas fa-calendar-check me-2"></i>
+                    Solicitar Cita
+                  </button>
+                  <a href="/chatbot" class="btn btn-outline-secondary">
+                    <i class="fas fa-arrow-left me-2"></i>
+                    Volver al Cuestionario
+                  </a>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Información adicional -->
+      <div class="row mt-4">
+        <div class="col-md-4">
+          <div class="card border-0 shadow-sm">
+            <div class="card-body text-center">
+              <i class="fas fa-shield-alt text-success fa-2x mb-3"></i>
+              <h6>Protocolos de Seguridad</h6>
+              <small class="text-muted">Cumplimos con todos los protocolos sanitarios</small>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card border-0 shadow-sm">
+            <div class="card-body text-center">
+              <i class="fas fa-user-md text-primary fa-2x mb-3"></i>
+              <h6>Atención Especializada</h6>
+              <small class="text-muted">Médico pediatra certificado con años de experiencia</small>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card border-0 shadow-sm">
+            <div class="card-body text-center">
+              <i class="fas fa-clock text-warning fa-2x mb-3"></i>
+              <h6>Puntualidad</h6>
+              <small class="text-muted">Respetamos los horarios de cita programados</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.info-item {
+  padding: 10px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.info-item:last-child {
+  border-bottom: none;
+}
+
+.card {
+  transition: transform 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+}
+</style>
+{% endblock %}

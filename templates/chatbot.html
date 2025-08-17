@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pre-Consulta | Consultorio Pediátrico</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    .chat-container {
+      max-width: 600px;
+      margin: 20px auto;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+    
+    .chat-header {
+      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      color: white;
+      padding: 25px;
+      text-align: center;
+    }
+    
+    .chat-header h3 {
+      margin: 0;
+      font-weight: 600;
+    }
+    
+    .chat-body {
+      padding: 30px;
+      max-height: 70vh;
+      overflow-y: auto;
+    }
+    
+    .question-card {
+      background: #f8f9ff;
+      border: 2px solid #e3e8ff;
+      border-radius: 15px;
+      padding: 20px;
+      margin-bottom: 25px;
+      display: none;
+      animation: slideIn 0.5s ease-out;
+    }
+    
+    .question-card.active {
+      display: block;
+    }
+    
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .question-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #4c63d2;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+    }
+    
+    .question-number {
+      background: #4c63d2;
+      color: white;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 10px;
+      font-size: 0.9rem;
+      font-weight: bold;
+    }
+    
+    .option-btn {
+      background: white;
+      border: 2px solid #e3e8ff;
+      border-radius: 10px;
+      padding: 12px 15px;
+      margin: 5px 0;
+      width: 100%;
+      text-align: left;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    
+    .option-btn:hover {
+      background: #4c63d2;
+      color: white;
+      border-color: #4c63d2;
+      transform: translateY(-2px);
+    }
+    
+    .option-btn.selected {
+      background: #4c63d2;
+      color: white;
+      border-color: #4c63d2;
+    }
+    
+    .text-input {
+      width: 100%;
+      padding: 12px 15px;
+      border: 2px solid #e3e8ff;
+      border-radius: 10px;
+      font-size: 1rem;
+      transition: border-color 0.3s ease;
+    }
+    
+    .text-input:focus {
+      outline: none;
+      border-color: #4c63d2;
+      box-shadow: 0 0 0 3px rgba(76, 99, 210, 0.1);
+    }
+    
+    .navigation-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+    
+    .nav-btn {
+      padding: 12px 25px;
+      border: none;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .btn-prev {
+      background: #6c757d;
+      color: white;
+    }
+    
+    .btn-prev:hover {
+      background: #5a6268;
+      transform: translateY(-2px);
+    }
+    
+    .btn-next {
+      background: #4c63d2;
+      color: white;
+    }
+    
+    .btn-next:hover {
+      background: #3d4fd4;
+      transform: translateY(-2px);
+    }
+    
+    .btn-submit {
+      background: #28a745;
+      color: white;
+    }
+    
+    .btn-submit:hover {
+      background: #218838;
+      transform: translateY(-2px);
+    }
+    
+    .progress-bar {
+      height: 6px;
+      background: #e3e8ff;
+      border-radius: 3px;
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+    
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #4c63d2, #00f2fe);
+      border-radius: 3px;
+      transition: width 0.5s ease;
+      width: 0%;
+    }
+    
+    .final-message {
+      display: none;
+      text-align: center;
+      padding: 40px 20px;
+    }
+    
+    .final-message.active {
+      display: block;
+    }
+    
+    .success-icon {
+      font-size: 4rem;
+      color: #28a745;
+      margin-bottom: 20px;
+    }
+    
+    .reserve-btn {
+      background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+      color: white;
+      padding: 15px 30px;
+      border: none;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-top: 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+    
+    .reserve-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(255, 107, 107, 0.3);
+      color: white;
+      text-decoration: none;
+    }
+    
+    .loading {
+      display: none;
+      text-align: center;
+      padding: 20px;
+    }
+    
+    .spinner {
+      border: 3px solid #f3f3f3;
+      border-top: 3px solid #4c63d2;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 15px;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="chat-container">
+    <div class="chat-header">
+      <h3><i class="fas fa-stethoscope me-2"></i>Consultorio Pediátrico</h3>
+      <p class="mb-0">👋 Hola, soy el asistente virtual del Dr. [Tu Nombre]</p>
+      <small>Antes de tu consulta, ayúdanos con esta información 🩺✨</small>
+    </div>
+    
+    <div class="chat-body">
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      
+      <form id="preconsultaForm">
+        <!-- Pregunta 1: Motivo principal -->
+        <div class="question-card active" data-question="1">
+          <div class="question-title">
+            <span class="question-number">1</span>
+            ¿Cuál es el motivo principal de la consulta?
+          </div>
+          <button type="button" class="option-btn" data-value="Fiebre">a) Fiebre</button>
+          <button type="button" class="option-btn" data-value="Tos o dificultad para respirar">b) Tos o dificultad para respirar</button>
+          <button type="button" class="option-btn" data-value="Dolor abdominal o vómitos">c) Dolor abdominal o vómitos</button>
+          <button type="button" class="option-btn" data-value="Erupción o sarpullido">d) Erupción o sarpullido</button>
+          <button type="button" class="option-btn" data-value="Revisión general">e) Revisión general</button>
+          <button type="button" class="option-btn" data-value="otro">f) Otro (especifica abajo)</button>
+          <input type="text" class="text-input mt-2" name="motivo_otro" placeholder="Especifica el motivo..." style="display: none;">
+          <input type="hidden" name="motivo_consulta" required>
+        </div>
+
+        <!-- Pregunta 2: Fiebre actual -->
+        <div class="question-card" data-question="2">
+          <div class="question-title">
+            <span class="question-number">2</span>
+            ¿Tiene fiebre actualmente?
+          </div>
+          <button type="button" class="option-btn" data-value="No">a) No</button>
+          <button type="button" class="option-btn" data-value="Sí, menor de 38°C">b) Sí, menor de 38°C</button>
+          <button type="button" class="option-btn" data-value="Sí, entre 38° y 39°C">c) Sí, entre 38° y 39°C</button>
+          <button type="button" class="option-btn" data-value="Sí, mayor de 39°C">d) Sí, mayor de 39°C</button>
+          <button type="button" class="option-btn" data-value="No estoy seguro/a">e) No estoy seguro/a</button>
+          <input type="hidden" name="fiebre_actual" required>
+        </div>
+
+        <!-- Pregunta 3: Duración síntomas -->
+        <div class="question-card" data-question="3">
+          <div class="question-title">
+            <span class="question-number">3</span>
+            ¿Desde cuándo presenta los síntomas?
+          </div>
+          <button type="button" class="option-btn" data-value="Hoy">a) Hoy</button>
+          <button type="button" class="option-btn" data-value="1-2 días">b) 1-2 días</button>
+          <button type="button" class="option-btn" data-value="3-5 días">c) 3-5 días</button>
+          <button type="button" class="option-btn" data-value="Más de una semana">d) Más de una semana</button>
+          <input type="hidden" name="duracion_sintomas" required>
+        </div>
+
+        <!-- Pregunta 4: Evolución síntomas -->
+        <div class="question-card" data-question="4">
+          <div class="question-title">
+            <span class="question-number">4</span>
+            ¿Cómo han evolucionado los síntomas?
+          </div>
+          <button type="button" class="option-btn" data-value="Empeorando">a) Empeorando</button>
+          <button type="button" class="option-btn" data-value="Mejorando">b) Mejorando</button>
+          <button type="button" class="option-btn" data-value="Se mantienen igual">c) Se mantienen igual</button>
+          <input type="hidden" name="evolucion_sintomas" required>
+        </div>
+
+        <!-- Pregunta 5: Edad -->
+        <div class="question-card" data-question="5">
+          <div class="question-title">
+            <span class="question-number">5</span>
+            Edad del niño/a:
+          </div>
+          <input type="text" class="text-input" name="edad_nino" placeholder='Ejemplo: "3 años", "6 meses"' required>
+          <small class="text-muted">Escribe la edad en meses o años</small>
+        </div>
+
+        <!-- Pregunta 6: Alimentación -->
+        <div class="question-card" data-question="6">
+          <div class="question-title">
+            <span class="question-number">6</span>
+            ¿Está comiendo y bebiendo con normalidad?
+          </div>
+          <button type="button" class="option-btn" data-value="Sí">a) Sí</button>
+          <button type="button" class="option-btn" data-value="No, come menos">b) No, come menos</button>
+          <button type="button" class="option-btn" data-value="No quiere comer ni beber">c) No quiere comer ni beber</button>
+          <button type="button" class="option-btn" data-value="Ha vomitado">d) Ha vomitado</button>
+          <input type="hidden" name="alimentacion" required>
+        </div>
+
+        <!-- Pregunta 7: Contacto -->
+        <div class="question-card" data-question="7">
+          <div class="question-title">
+            <span class="question-number">7</span>
+            ¿Deseas que te llamemos antes de la cita si hay algo urgente?
+          </div>
+          <button type="button" class="option-btn" data-value="Sí, por favor">a) Sí, por favor</button>
+          <button type="button" class="option-btn" data-value="No es necesario">b) No es necesario</button>
+          <input type="text" class="text-input mt-2" name="telefono_contacto" placeholder="Número de teléfono (opcional)">
+          <input type="hidden" name="llamada_urgente" required>
+        </div>
+
+        <!-- Información adicional -->
+        <div class="question-card" data-question="8">
+          <div class="question-title">
+            <span class="question-number">8</span>
+            Información adicional (opcional):
+          </div>
+          <textarea class="text-input" name="informacion_adicional" rows="4" placeholder="¿Hay algo más que consideres importante que el doctor sepa?"></textarea>
+        </div>
+      </form>
+
+      <div class="navigation-buttons">
+        <button type="button" class="nav-btn btn-prev" id="prevBtn" onclick="previousQuestion()" style="display: none;">
+          <i class="fas fa-arrow-left me-2"></i>Anterior
+        </button>
+        <button type="button" class="nav-btn btn-next" id="nextBtn" onclick="nextQuestion()">
+          Siguiente<i class="fas fa-arrow-right ms-2"></i>
+        </button>
+        <button type="button" class="nav-btn btn-submit" id="submitBtn" onclick="submitForm()" style="display: none;">
+          <i class="fas fa-paper-plane me-2"></i>Enviar
+        </button>
+      </div>
+
+      <div class="loading" id="loading">
+        <div class="spinner"></div>
+        <p>Enviando información al doctor...</p>
+      </div>
+
+      <div class="final-message" id="finalMessage">
+        <div class="success-icon">
+          <i class="fas fa-check-circle"></i>
+        </div>
+        <h4>✅ ¡Gracias por tu información!</h4>
+        <p class="mb-3">El pediatra recibirá estos datos antes de la consulta. 🩺</p>
+        <p class="text-muted mb-4">
+          ⚠️ <strong>Importante:</strong> Si tu hijo/a tiene dificultad para respirar, convulsiones, 
+          está muy decaído o no responde, acude inmediatamente al servicio de urgencias más cercano.
+        </p>
+        <a href="/reservar-cita" class="reserve-btn">
+          <i class="fas fa-calendar-plus me-2"></i>Reservar Consulta
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    let currentQuestion = 1;
+    const totalQuestions = 8;
+
+    // Manejar selección de opciones
+    document.addEventListener('click', function(e) {
+      if (e.target.classList.contains('option-btn')) {
+        const card = e.target.closest('.question-card');
+        const hiddenInput = card.querySelector('input[type="hidden"]');
+        const textInput = card.querySelector('input[type="text"]');
+        
+        // Remover selección previa
+        card.querySelectorAll('.option-btn').forEach(btn => btn.classList.remove('selected'));
+        
+        // Seleccionar opción actual
+        e.target.classList.add('selected');
+        
+        // Manejar caso especial "otro"
+        if (e.target.dataset.value === 'otro') {
+          textInput.style.display = 'block';
+          textInput.focus();
+          hiddenInput.value = '';
+        } else {
+          if (textInput) textInput.style.display = 'none';
+          hiddenInput.value = e.target.dataset.value;
+        }
+      }
+    });
+
+    // Manejar input de texto para "otro"
+    document.addEventListener('input', function(e) {
+      if (e.target.name === 'motivo_otro') {
+        const hiddenInput = e.target.closest('.question-card').querySelector('input[name="motivo_consulta"]');
+        hiddenInput.value = e.target.value;
+      }
+    });
+
+    function updateProgress() {
+      const progress = (currentQuestion / totalQuestions) * 100;
+      document.getElementById('progressFill').style.width = progress + '%';
+    }
+
+    function showQuestion(questionNumber) {
+      document.querySelectorAll('.question-card').forEach(card => {
+        card.classList.remove('active');
+      });
+      
+      const targetCard = document.querySelector(`[data-question="${questionNumber}"]`);
+      if (targetCard) {
+        targetCard.classList.add('active');
+      }
+      
+      // Actualizar botones de navegación
+      document.getElementById('prevBtn').style.display = questionNumber > 1 ? 'block' : 'none';
+      document.getElementById('nextBtn').style.display = questionNumber < totalQuestions ? 'block' : 'none';
+      document.getElementById('submitBtn').style.display = questionNumber === totalQuestions ? 'block' : 'none';
+      
+      updateProgress();
+    }
+
+    function nextQuestion() {
+      const currentCard = document.querySelector(`[data-question="${currentQuestion}"]`);
+      const requiredInput = currentCard.querySelector('input[required], textarea[required]');
+      
+      if (requiredInput && !requiredInput.value.trim()) {
+        alert('Por favor completa esta pregunta antes de continuar.');
+        return;
+      }
+      
+      if (currentQuestion < totalQuestions) {
+        currentQuestion++;
+        showQuestion(currentQuestion);
+      }
+    }
+
+    function previousQuestion() {
+      if (currentQuestion > 1) {
+        currentQuestion--;
+        showQuestion(currentQuestion);
+      }
+    }
+
+    function submitForm() {
+      const form = document.getElementById('preconsultaForm');
+      const formData = new FormData(form);
+      
+      // Validar campos requeridos
+      const requiredFields = form.querySelectorAll('input[required], textarea[required]');
+      for (let field of requiredFields) {
+        if (!field.value.trim()) {
+          alert('Por favor completa todas las preguntas requeridas.');
+          return;
+        }
+      }
+      
+      // Mostrar loading
+      document.querySelector('.chat-body').style.display = 'none';
+      document.querySelector('.navigation-buttons').style.display = 'none';
+      document.getElementById('loading').style.display = 'block';
+      
+      // Enviar datos
+      fetch('/enviar-preconsulta', {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById('loading').style.display = 'none';
+        if (data.success) {
+          document.getElementById('finalMessage').classList.add('active');
+        } else {
+          alert('Error al enviar la información. Por favor intenta nuevamente.');
+          document.querySelector('.chat-body').style.display = 'block';
+          document.querySelector('.navigation-buttons').style.display = 'flex';
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        document.getElementById('loading').style.display = 'none';
+        alert('Error al enviar la información. Por favor intenta nuevamente.');
+        document.querySelector('.chat-body').style.display = 'block';
+        document.querySelector('.navigation-buttons').style.display = 'flex';
+      });
+    }
+
+    // Inicializar
+    updateProgress();
+  </script>
+</body>
+</html>
