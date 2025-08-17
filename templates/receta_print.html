@@ -14,7 +14,7 @@
     .receta { 
       max-width: 800px; 
       margin: 20px auto; 
-      padding: 40px; 
+      padding: 30px; 
       border: 2px solid #2c5aa0;
       border-radius: 10px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
@@ -48,9 +48,11 @@
     }
     .seccion {
       margin-bottom: 20px;
-      padding: 15px;
+      padding: 18px;
       background: #f8f9fa;
       border-left: 4px solid #2c5aa0;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
     }
     .seccion-titulo {
       font-weight: bold;
@@ -61,13 +63,15 @@
     }
     .medicamento-item {
       background: white;
-      padding: 10px;
+      padding: 12px 15px;
       margin: 8px 0;
-      border-radius: 5px;
+      border-radius: 6px;
       border-left: 3px solid #28a745;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      font-size: 1rem;
     }
     .firma { 
-      margin-top: 80px; 
+      margin-top: 60px; 
       text-align: center;
       padding-top: 20px;
       border-top: 1px solid #ddd;
@@ -80,6 +84,23 @@
     .cedula {
       font-size: 0.9rem;
       color: #666;
+      margin-top: 5px;
+    }
+    .diagnostico-texto {
+      font-size: 1.1rem;
+      line-height: 1.5;
+      color: #333;
+    }
+    .sintomas-texto {
+      font-size: 1rem;
+      line-height: 1.4;
+      color: #555;
+    }
+    .indicaciones-texto {
+      font-size: 1rem;
+      line-height: 1.4;
+      color: #444;
+      font-style: italic;
     }
     @media print { .print-hidden { display: none !important; } }
   </style>
@@ -116,13 +137,13 @@
     {% if receta.sintomas %}
     <div class="seccion">
       <div class="seccion-titulo">Síntomas Presentados</div>
-      <p>{{ receta.sintomas }}</p>
+      <p class="sintomas-texto">{{ receta.sintomas }}</p>
     </div>
     {% endif %}
     
     <div class="seccion">
       <div class="seccion-titulo">Diagnóstico</div>
-      <p>{{ receta.diagnostico }}</p>
+      <p class="diagnostico-texto">{{ receta.diagnostico }}</p>
     </div>
     
     <div class="seccion">
@@ -137,37 +158,9 @@
     {% if receta.indicaciones %}
     <div class="seccion">
       <div class="seccion-titulo">Indicaciones Especiales</div>
-      <p>{{ receta.indicaciones }}</p>
+      <p class="indicaciones-texto">{{ receta.indicaciones }}</p>
     </div>
     {% endif %}
-    
-    <div class="seccion">
-      <div class="seccion-titulo">Recomendaciones Generales</div>
-      <ul class="mb-0">
-        <li>Administrar los medicamentos según las indicaciones médicas</li>
-        <li>Completar el tratamiento aunque mejoren los síntomas</li>
-        <li>En caso de reacciones adversas, suspender y consultar inmediatamente</li>
-        <li>Mantener los medicamentos fuera del alcance de los niños</li>
-        <li>Regresar a consulta si no hay mejoría en 48-72 horas</li>
-      </ul>
-    </div>
-    
-    <div class="row mt-4">
-      <div class="col-md-6">
-        <div class="seccion">
-          <div class="seccion-titulo">Próxima Cita</div>
-          <p>Fecha: _______________</p>
-          <p>Hora: ________________</p>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="seccion">
-          <div class="seccion-titulo">Contacto de Emergencia</div>
-          <p>Tel: ___________________</p>
-          <p>Urgencias: ______________</p>
-        </div>
-      </div>
-    </div>
     
     <div class="firma">
       <div class="firma-linea"></div>
