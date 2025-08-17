@@ -5,197 +5,528 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Receta | {{ paciente.nombre }}</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    
     body { 
-      background: #fff; 
-      font-family: 'Times New Roman', serif;
-      line-height: 1.4;
+      background: #f8f9fa; 
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding: 20px;
     }
-    .receta { 
-      max-width: 800px; 
-      margin: 20px auto; 
-      padding: 30px; 
-      border: 2px solid #2c5aa0;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-    .cabecera { 
-      display: flex; 
-      justify-content: space-between; 
-      align-items: center; 
-      margin-bottom: 20px;
-      padding-bottom: 15px;
-      border-bottom: 2px solid #2c5aa0;
-    }
-    .clinica { 
-      font-weight: 700; 
-      font-size: 1.5rem; 
-      color: #2c5aa0;
-      text-transform: uppercase;
-    }
-    .datos { 
-      font-size: 1rem;
-      color: #333;
-    }
-    .titulo { 
-      text-align: center; 
-      font-size: 1.4rem; 
-      font-weight: 700; 
-      margin: 20px 0;
-      color: #2c5aa0;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-    }
-    .seccion {
-      margin-bottom: 20px;
-      padding: 18px;
-      background: #f8f9fa;
-      border-left: 4px solid #2c5aa0;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    }
-    .seccion-titulo {
-      font-weight: bold;
-      color: #2c5aa0;
-      font-size: 1.1rem;
-      margin-bottom: 8px;
-      text-transform: uppercase;
-    }
-    .medicamento-item {
+    
+    .prescription-container {
+      max-width: 210mm;
+      min-height: 297mm;
+      margin: 0 auto;
       background: white;
-      padding: 12px 15px;
-      margin: 8px 0;
-      border-radius: 6px;
-      border-left: 3px solid #28a745;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-      font-size: 1rem;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+      position: relative;
+      overflow: hidden;
     }
-    .firma { 
-      margin-top: 60px; 
-      text-align: center;
-      padding-top: 20px;
-      border-top: 1px solid #ddd;
+    
+    /* Header con gradiente azul */
+    .header {
+      background: linear-gradient(135deg, #4A90E2 0%, #357ABD 100%);
+      color: white;
+      padding: 30px 40px;
+      position: relative;
+      overflow: hidden;
     }
-    .firma-linea {
-      border-top: 2px solid #333;
-      width: 250px;
-      margin: 0 auto 10px;
+    
+    .header::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 300px;
+      height: 300px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 50%;
+      z-index: 1;
     }
-    .cedula {
-      font-size: 0.9rem;
+    
+    .header::after {
+      content: '';
+      position: absolute;
+      bottom: -30%;
+      right: -10%;
+      width: 200px;
+      height: 200px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 50%;
+      z-index: 1;
+    }
+    
+    .header-content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    
+    .doctor-info {
+      flex: 1;
+    }
+    
+    .doctor-name {
+      font-size: 28px;
+      font-weight: 700;
+      margin: 0;
+      letter-spacing: -0.5px;
+    }
+    
+    .doctor-specialty {
+      font-size: 18px;
+      font-weight: 400;
+      margin: 5px 0 0 0;
+      opacity: 0.9;
+    }
+    
+    .credentials {
+      text-align: right;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+    
+    .credentials strong {
+      display: block;
+      font-weight: 600;
+    }
+    
+    /* Ícono pediátrico */
+    .pediatric-icon {
+      position: absolute;
+      right: 40px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 60px;
+      opacity: 0.2;
+      z-index: 1;
+    }
+    
+    /* Contenido principal */
+    .content {
+      padding: 40px;
+    }
+    
+    /* Información del paciente */
+    .patient-info {
+      background: #f8f9ff;
+      border-left: 4px solid #4A90E2;
+      padding: 25px;
+      margin-bottom: 30px;
+      border-radius: 0 8px 8px 0;
+    }
+    
+    .patient-info h3 {
+      color: #4A90E2;
+      font-size: 18px;
+      font-weight: 600;
+      margin: 0 0 15px 0;
+      display: flex;
+      align-items: center;
+    }
+    
+    .patient-info h3 i {
+      margin-right: 10px;
+    }
+    
+    .patient-details {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 20px;
+    }
+    
+    .patient-field {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .patient-field label {
+      font-size: 12px;
+      font-weight: 600;
       color: #666;
-      margin-top: 5px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 5px;
     }
-    .diagnostico-texto {
-      font-size: 1.1rem;
-      line-height: 1.5;
+    
+    .patient-field .value {
+      font-size: 16px;
+      font-weight: 500;
       color: #333;
+      padding: 8px 0;
+      border-bottom: 1px solid #e0e0e0;
     }
-    .sintomas-texto {
-      font-size: 1rem;
+    
+    /* Secciones de contenido médico */
+    .medical-section {
+      margin-bottom: 30px;
+      background: white;
+      border: 1px solid #e8e8e8;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    
+    .section-header {
+      background: #4A90E2;
+      color: white;
+      padding: 15px 20px;
+      font-weight: 600;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+    }
+    
+    .section-header i {
+      margin-right: 10px;
+      font-size: 18px;
+    }
+    
+    .section-content {
+      padding: 20px;
+    }
+    
+    .symptoms-text, .diagnosis-text, .instructions-text {
+      font-size: 15px;
+      line-height: 1.6;
+      color: #333;
+      margin: 0;
+    }
+    
+    /* Lista de medicamentos */
+    .medication-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    
+    .medication-item {
+      background: #f8f9ff;
+      border: 1px solid #e3e8ff;
+      border-radius: 6px;
+      padding: 15px 20px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      transition: all 0.2s ease;
+    }
+    
+    .medication-item:hover {
+      background: #f0f4ff;
+      border-color: #4A90E2;
+    }
+    
+    .medication-number {
+      background: #4A90E2;
+      color: white;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 14px;
+      margin-right: 15px;
+      flex-shrink: 0;
+    }
+    
+    .medication-name {
+      font-size: 15px;
+      font-weight: 500;
+      color: #333;
+      flex: 1;
+    }
+    
+    /* Firma */
+    .signature-section {
+      margin-top: 60px;
+      padding-top: 30px;
+      border-top: 2px solid #e8e8e8;
+      text-align: center;
+    }
+    
+    .signature-line {
+      width: 300px;
+      height: 2px;
+      background: #333;
+      margin: 40px auto 15px;
+    }
+    
+    .doctor-signature {
+      font-size: 18px;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 5px;
+    }
+    
+    .signature-details {
+      font-size: 14px;
+      color: #666;
       line-height: 1.4;
-      color: #555;
     }
-    .indicaciones-texto {
-      font-size: 1rem;
-      line-height: 1.4;
-      color: #444;
-      font-style: italic;
+    
+    /* Footer */
+    .footer {
+      background: linear-gradient(135deg, #4A90E2 0%, #357ABD 100%);
+      color: white;
+      padding: 20px 40px;
+      margin-top: auto;
+      position: relative;
+      overflow: hidden;
     }
-    @media print { .print-hidden { display: none !important; } }
+    
+    .footer::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -20%;
+      width: 200px;
+      height: 200px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 50%;
+    }
+    
+    .footer-content {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 30px;
+      font-size: 14px;
+    }
+    
+    .footer-item {
+      display: flex;
+      align-items: center;
+    }
+    
+    .footer-item i {
+      margin-right: 10px;
+      font-size: 16px;
+      opacity: 0.8;
+    }
+    
+    /* Estilos para impresión */
+    @media print {
+      body {
+        background: white;
+        padding: 0;
+      }
+      
+      .prescription-container {
+        box-shadow: none;
+        max-width: none;
+        min-height: auto;
+      }
+      
+      .print-hidden {
+        display: none !important;
+      }
+      
+      .footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin-top: 0;
+      }
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      .header-content {
+        flex-direction: column;
+        gap: 20px;
+      }
+      
+      .credentials {
+        text-align: left;
+      }
+      
+      .patient-details {
+        grid-template-columns: 1fr;
+        gap: 15px;
+      }
+      
+      .footer-content {
+        grid-template-columns: 1fr;
+        gap: 15px;
+      }
+    }
   </style>
 </head>
 <body>
-  <div class="receta">
-    <div class="cabecera">
-      <div class="clinica">Consultorio Pediátrico</div>
-      <div class="datos">
-        <strong>Fecha:</strong> {{ fecha_actual.strftime("%d/%m/%Y") }}<br>
-        <strong>Hora:</strong> {{ fecha_actual.strftime("%H:%M") }}
+  <div class="prescription-container">
+    <!-- Header -->
+    <div class="header">
+      <div class="header-content">
+        <div class="doctor-info">
+          <h1 class="doctor-name">Dr(a). [Nombre del Médico]</h1>
+          <p class="doctor-specialty">Médico Pediatra Certificado</p>
+        </div>
+        <div class="credentials">
+          <strong>CÉDULA PROFESIONAL 1234567</strong>
+          <div>CÉDULA DE ESPECIALIDAD 7654321</div>
+          <div>INSTITUTO MEXICANO DEL SEGURO SOCIAL</div>
+          <div>CONSULTORIO PEDIÁTRICO ESPECIALIZADO</div>
+        </div>
       </div>
+      <i class="fas fa-baby pediatric-icon"></i>
     </div>
-    
-    <div class="seccion">
-      <div class="seccion-titulo">Datos del Paciente</div>
-      <div class="row">
-        <div class="col-md-8">
-          <strong>Nombre:</strong> {{ paciente.nombre }}
+
+    <!-- Contenido -->
+    <div class="content">
+      <!-- Información del paciente -->
+      <div class="patient-info">
+        <h3><i class="fas fa-child"></i>INFORMACIÓN DEL PACIENTE</h3>
+        <div class="patient-details">
+          <div class="patient-field">
+            <label>PACIENTE:</label>
+            <div class="value">{{ paciente.nombre }}</div>
+          </div>
+          <div class="patient-field">
+            <label>FECHA:</label>
+            <div class="value">{{ fecha_actual.strftime("%d/%m/%Y") }}</div>
+          </div>
+          <div class="patient-field">
+            <label>EDAD:</label>
+            <div class="value">{{ paciente.edad or 'No especificada' }}</div>
+          </div>
         </div>
-        <div class="col-md-4">
-          <strong>Edad:</strong> {{ paciente.edad or 'No especificada' }}
+        {% if paciente.telefono %}
+        <div class="patient-details mt-3">
+          <div class="patient-field">
+            <label>TELÉFONO:</label>
+            <div class="value">{{ paciente.telefono }}</div>
+          </div>
+          <div class="patient-field">
+            <label>HORA:</label>
+            <div class="value">{{ fecha_actual.strftime("%H:%M") }}</div>
+          </div>
+          <div class="patient-field">
+            <label>CONSULTA:</label>
+            <div class="value">#{{ indice + 1 }}</div>
+          </div>
         </div>
+        {% endif %}
       </div>
-      {% if paciente.telefono %}
-      <div class="mt-2">
-        <strong>Teléfono:</strong> {{ paciente.telefono }}
+
+      {% if receta.sintomas %}
+      <!-- Síntomas -->
+      <div class="medical-section">
+        <div class="section-header">
+          <i class="fas fa-stethoscope"></i>
+          SÍNTOMAS PRESENTADOS
+        </div>
+        <div class="section-content">
+          <p class="symptoms-text">{{ receta.sintomas }}</p>
+        </div>
       </div>
       {% endif %}
-    </div>
-    
-    <div class="titulo">Receta Médica</div>
-    
-    {% if receta.sintomas %}
-    <div class="seccion">
-      <div class="seccion-titulo">Síntomas Presentados</div>
-      <p class="sintomas-texto">{{ receta.sintomas }}</p>
-    </div>
-    {% endif %}
-    
-    <div class="seccion">
-      <div class="seccion-titulo">Diagnóstico</div>
-      <p class="diagnostico-texto">{{ receta.diagnostico }}</p>
-    </div>
-    
-    <div class="seccion">
-      <div class="seccion-titulo">Medicamentos Prescritos</div>
-      {% for m in receta.receta %}
-        <div class="medicamento-item">
-          <strong>{{ loop.index }}.</strong> {{ m }}
+
+      <!-- Diagnóstico -->
+      <div class="medical-section">
+        <div class="section-header">
+          <i class="fas fa-diagnoses"></i>
+          DIAGNÓSTICO MÉDICO
         </div>
-      {% endfor %}
+        <div class="section-content">
+          <p class="diagnosis-text">{{ receta.diagnostico }}</p>
+        </div>
+      </div>
+
+      <!-- Medicamentos -->
+      <div class="medical-section">
+        <div class="section-header">
+          <i class="fas fa-pills"></i>
+          MEDICAMENTOS PRESCRITOS
+        </div>
+        <div class="section-content">
+          <ul class="medication-list">
+            {% for m in receta.receta %}
+            <li class="medication-item">
+              <div class="medication-number">{{ loop.index }}</div>
+              <div class="medication-name">{{ m }}</div>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+
+      {% if receta.indicaciones %}
+      <!-- Indicaciones -->
+      <div class="medical-section">
+        <div class="section-header">
+          <i class="fas fa-clipboard-list"></i>
+          INDICACIONES ESPECIALES
+        </div>
+        <div class="section-content">
+          <p class="instructions-text">{{ receta.indicaciones }}</p>
+        </div>
+      </div>
+      {% endif %}
+
+      <!-- Firma -->
+      <div class="signature-section">
+        <div class="signature-line"></div>
+        <div class="doctor-signature">Dr(a). [Nombre del Médico]</div>
+        <div class="signature-details">
+          Médico Pediatra Certificado<br>
+          Cédula Profesional: 1234567 | Cédula de Especialidad: 7654321
+        </div>
+      </div>
     </div>
-    
-    {% if receta.indicaciones %}
-    <div class="seccion">
-      <div class="seccion-titulo">Indicaciones Especiales</div>
-      <p class="indicaciones-texto">{{ receta.indicaciones }}</p>
-    </div>
-    {% endif %}
-    
-    <div class="firma">
-      <div class="firma-linea"></div>
-      <p class="mb-1"><strong>Dr(a). [Nombre del Médico]</strong></p>
-      <p class="mb-1">Médico Pediatra</p>
-      <p class="cedula">Cédula Profesional: _______________</p>
-      <p class="cedula">Cédula de Especialidad: ___________</p>
+
+    <!-- Footer -->
+    <div class="footer">
+      <div class="footer-content">
+        <div class="footer-item">
+          <i class="fas fa-envelope"></i>
+          <div>
+            <strong>consultorio@pediatra.com</strong><br>
+            www.consultoriopediatrico.com
+          </div>
+        </div>
+        <div class="footer-item">
+          <i class="fas fa-phone"></i>
+          <div>
+            <strong>(55) 1234 5678</strong><br>
+            Calle Principal 123, Ciudad
+          </div>
+        </div>
+        <div class="footer-item">
+          <i class="fas fa-clock"></i>
+          <div>
+            <strong>Horario: Lunes a Viernes 8:00am - 5:00pm</strong><br>
+            Sábados 9:00am - 2:00pm
+          </div>
+        </div>
+      </div>
     </div>
   </div>
   
-  <div class="text-center print-hidden mt-4">
-    <div class="d-flex gap-2 justify-content-center">
-      <a href="javascript:window.print()" class="btn btn-primary">
+  <!-- Botones de acción -->
+  <div class="text-center print-hidden mt-4 mb-4">
+    <div class="d-flex gap-3 justify-content-center">
+      <button onclick="window.print()" class="btn btn-primary btn-lg">
         <i class="fas fa-print me-2"></i>Imprimir Receta
-      </a>
-      <a href="/historial/{{ paciente._id }}" class="btn btn-secondary">
+      </button>
+      <a href="/historial/{{ paciente._id }}" class="btn btn-outline-secondary btn-lg">
         <i class="fas fa-arrow-left me-2"></i>Volver al Historial
       </a>
     </div>
   </div>
-</body>
-</html>
-        {% for m in receta.receta %}
-          <li>{{ m }}</li>
-        {% endfor %}
-      </ul>
-    </div>
-    <div class="firma">
-      <p>_____________________________</p>
-      <p>Médico Pediatra</p>
-      <p>Cédula Profesional: _________</p>
-    </div>
-  </div>
-  <div class="text-center print-hidden">
-    <a href="javascript:window.print()" class="btn btn-primary mt-3">Imprimir</a>
-  </div>
+
+  <script>
+    // Auto-print cuando se carga la página (opcional)
+    // window.addEventListener('load', function() {
+    //   setTimeout(() => window.print(), 1000);
+    // });
+  </script>
 </body>
 </html>
