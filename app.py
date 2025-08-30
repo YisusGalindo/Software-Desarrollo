@@ -42,11 +42,29 @@ def pacientes():
 def nuevo_paciente():
     nombre = request.form.get("nombre", "").strip()
     edad = request.form.get("edad", "").strip()
+    peso = request.form.get("peso", "").strip()
+    talla = request.form.get("talla", "").strip()
+    pc = request.form.get("pc", "").strip()
+    fecha_consulta = request.form.get("fecha_consulta", "").strip()
+    nombre_familiar = request.form.get("nombre_familiar", "").strip()
+    edad_familiar = request.form.get("edad_familiar", "").strip()
     telefono = request.form.get("telefono", "").strip()
     if not nombre:
         flash("El nombre es obligatorio", "danger")
         return redirect(url_for("pacientes"))
-    pacientes_collection.insert_one({"nombre": nombre, "edad": edad, "telefono": telefono, "historial": []})
+    paciente_data = {
+        "nombre": nombre, 
+        "edad": edad, 
+        "peso": peso,
+        "talla": talla,
+        "pc": pc,
+        "fecha_consulta": fecha_consulta,
+        "nombre_familiar": nombre_familiar,
+        "edad_familiar": edad_familiar,
+        "telefono": telefono, 
+        "historial": []
+    }
+    pacientes_collection.insert_one(paciente_data)
     flash("Paciente agregado", "success")
     return redirect(url_for("pacientes"))
 
@@ -79,12 +97,16 @@ def eliminar_medicamento(id):
     return redirect(url_for("medicamentos"))
 
 # ---------- RECETA & HISTORIAL ----------
-@app.route("/receta/<paciente_id>", methods=["GET", "POST"])
-def nueva_receta(paciente_id):
+@app.route("/receta/<paciente_id>/<tipo>", methods=["GET", "POST"])
+def nueva_receta(paciente_id, tipo):
     oid = to_objectid(paciente_id)
     paciente = pacientes_collection.find_one({"_id": oid})
     if not paciente:
         flash("Paciente no encontrado", "danger")
+        return redirect(url_for("pacientes"))
+
+    if tipo not in ['dieta', 'diagnostico']:
+        flash("Tipo de receta no válido", "danger")
         return redirect(url_for("pacientes"))
 
     medicamentos = list(medicamentos_collection.find({"es_pediatrico": True}).sort("nombre", 1))
@@ -93,19 +115,33 @@ def nueva_receta(paciente_id):
         sintomas = request.form.get("sintomas", "").strip()
         diagnostico = request.form.get("diagnostico", "").strip()
         indicaciones = request.form.get("indicaciones", "").strip()
-        receta = request.form.getlist("medicamentos")
-        nuevo_historial = {
-            "sintomas": sintomas, 
-            "diagnostico": diagnostico, 
-            "indicaciones": indicaciones,
-            "receta": receta,
-            "fecha": datetime.now().strftime("%d/%m/%Y %H:%M")
-        }
+        
+        if tipo == 'dieta':
+            dieta_contenido = request.form.get("dieta_contenido", "").strip()
+            nuevo_historial = {
+                "tipo": "dieta",
+                "sintomas": sintomas, 
+                "diagnostico": diagnostico, 
+                "indicaciones": indicaciones,
+                "dieta_contenido": dieta_contenido,
+                "fecha": datetime.now().strftime("%d/%m/%Y %H:%M")
+            }
+        else:
+            receta = request.form.getlist("medicamentos")
+            nuevo_historial = {
+                "tipo": "diagnostico",
+                "sintomas": sintomas, 
+                "diagnostico": diagnostico, 
+                "indicaciones": indicaciones,
+                "receta": receta,
+                "fecha": datetime.now().strftime("%d/%m/%Y %H:%M")
+            }
+        
         pacientes_collection.update_one({"_id": oid}, {"$push": {"historial": nuevo_historial}})
-        flash("Receta guardada en el historial", "success")
+        flash(f"Receta de {tipo} guardada en el historial", "success")
         return redirect(url_for("historial", paciente_id=paciente_id))
 
-    return render_template("nueva_receta.html", paciente=paciente, medicamentos=medicamentos)
+    return render_template("nueva_receta.html", paciente=paciente, medicamentos=medicamentos, tipo=tipo)
 
 @app.route("/historial/<paciente_id>")
 def historial(paciente_id):

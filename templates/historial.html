@@ -14,19 +14,32 @@
             {% if consulta.fecha %}
             <small class="text-muted">{{ consulta.fecha }}</small>
             {% endif %}
-            <a class="btn btn-sm btn-outline-primary print-hidden" href="/receta/print/{{ paciente._id }}/{{ loop.index0 }}">Imprimir Receta</a>
+            <div class="d-flex gap-2">
+              <span class="badge bg-{{ 'success' if consulta.tipo == 'dieta' else 'primary' }}">
+                {{ 'Dieta' if consulta.tipo == 'dieta' else 'Diagnóstico' }}
+              </span>
+              <a class="btn btn-sm btn-outline-primary print-hidden" href="/receta/print/{{ paciente._id }}/{{ loop.index0 }}">Imprimir Receta</a>
+            </div>
           </div>
           <p class="mb-1"><strong>Síntomas:</strong> {{ consulta.sintomas }}</p>
           <p class="mb-1"><strong>Diagnóstico:</strong> {{ consulta.diagnostico }}</p>
           {% if consulta.indicaciones %}
           <p class="mb-1"><strong>Indicaciones:</strong> {{ consulta.indicaciones }}</p>
           {% endif %}
+          {% if consulta.tipo == 'diagnostico' and consulta.receta %}
           <p class="mb-1"><strong>Medicamentos:</strong></p>
           <ul class="mb-0">
             {% for med in consulta.receta %}
               <li>{{ med }}</li>
             {% endfor %}
           </ul>
+          {% endif %}
+          {% if consulta.tipo == 'dieta' and consulta.dieta_contenido %}
+          <p class="mb-1"><strong>Plan de Dieta:</strong></p>
+          <div class="bg-light p-2 rounded">
+            <small>{{ consulta.dieta_contenido[:100] }}{% if consulta.dieta_contenido|length > 100 %}...{% endif %}</small>
+          </div>
+          {% endif %}
         </div>
       </div>
     {% endfor %}

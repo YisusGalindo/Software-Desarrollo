@@ -4,33 +4,40 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Receta | {{ paciente.nombre }}</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
     
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
     body { 
-      background: #f8f9fa; 
+      background: #f5f5f5; 
       font-family: 'Inter', sans-serif;
       margin: 0;
       padding: 20px;
+      color: #333;
     }
     
     .prescription-container {
-      max-width: 210mm;
+      width: 210mm;
       min-height: 297mm;
       margin: 0 auto;
       background: white;
       box-shadow: 0 0 20px rgba(0,0,0,0.1);
       position: relative;
-      overflow: hidden;
+      display: flex;
+      flex-direction: column;
     }
     
-    /* Header con gradiente azul */
+    /* Header */
     .header {
       background: linear-gradient(135deg, #4A90E2 0%, #357ABD 100%);
       color: white;
-      padding: 30px 40px;
+      padding: 25px 40px;
       position: relative;
       overflow: hidden;
     }
@@ -38,25 +45,12 @@
     .header::before {
       content: '';
       position: absolute;
-      top: -50%;
-      right: -20%;
-      width: 300px;
-      height: 300px;
-      background: rgba(255,255,255,0.1);
-      border-radius: 50%;
-      z-index: 1;
-    }
-    
-    .header::after {
-      content: '';
-      position: absolute;
-      bottom: -30%;
-      right: -10%;
+      top: -50px;
+      right: -50px;
       width: 200px;
       height: 200px;
-      background: rgba(255,255,255,0.05);
+      background: rgba(255,255,255,0.1);
       border-radius: 50%;
-      z-index: 1;
     }
     
     .header-content {
@@ -67,105 +61,110 @@
       align-items: flex-start;
     }
     
-    .doctor-info {
-      flex: 1;
-    }
-    
-    .doctor-name {
-      font-size: 28px;
+    .doctor-info h1 {
+      font-size: 24px;
       font-weight: 700;
-      margin: 0;
+      margin: 0 0 5px 0;
       letter-spacing: -0.5px;
     }
     
-    .doctor-specialty {
-      font-size: 18px;
-      font-weight: 400;
-      margin: 5px 0 0 0;
+    .doctor-info p {
+      font-size: 16px;
+      margin: 0;
       opacity: 0.9;
     }
     
     .credentials {
       text-align: right;
-      font-size: 14px;
+      font-size: 12px;
       line-height: 1.4;
     }
     
-    .credentials strong {
-      display: block;
-      font-weight: 600;
+    .credentials div {
+      margin-bottom: 2px;
     }
     
-    /* Ícono pediátrico */
-    .pediatric-icon {
+    .logo-section {
       position: absolute;
       right: 40px;
       top: 50%;
       transform: translateY(-50%);
-      font-size: 60px;
-      opacity: 0.2;
-      z-index: 1;
+      text-align: center;
     }
     
-    /* Contenido principal */
-    .content {
-      padding: 40px;
+    .logo-icon {
+      font-size: 50px;
+      opacity: 0.3;
+      margin-bottom: 5px;
     }
     
-    /* Información del paciente */
-    .patient-info {
-      background: #f8f9ff;
-      border-left: 4px solid #4A90E2;
-      padding: 25px;
-      margin-bottom: 30px;
-      border-radius: 0 8px 8px 0;
-    }
-    
-    .patient-info h3 {
-      color: #4A90E2;
-      font-size: 18px;
+    .logo-text {
+      font-size: 14px;
       font-weight: 600;
-      margin: 0 0 15px 0;
+      opacity: 0.8;
+    }
+    
+    /* Content */
+    .content {
+      flex: 1;
+      padding: 30px 40px;
+    }
+    
+    /* Patient Info Grid */
+    .patient-info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      margin-bottom: 30px;
+      background: #f8f9ff;
+      padding: 25px;
+      border-radius: 8px;
+      border-left: 4px solid #4A90E2;
+    }
+    
+    .patient-section h3 {
+      color: #4A90E2;
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 15px;
       display: flex;
       align-items: center;
     }
     
-    .patient-info h3 i {
-      margin-right: 10px;
+    .patient-section h3 i {
+      margin-right: 8px;
     }
     
-    .patient-details {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 20px;
-    }
-    
-    .patient-field {
+    .info-row {
       display: flex;
-      flex-direction: column;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      padding-bottom: 5px;
+      border-bottom: 1px dotted #ddd;
     }
     
-    .patient-field label {
-      font-size: 12px;
+    .info-row:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+    }
+    
+    .info-label {
       font-weight: 600;
       color: #666;
+      font-size: 12px;
       text-transform: uppercase;
       letter-spacing: 0.5px;
-      margin-bottom: 5px;
     }
     
-    .patient-field .value {
-      font-size: 16px;
+    .info-value {
       font-weight: 500;
       color: #333;
-      padding: 8px 0;
-      border-bottom: 1px solid #e0e0e0;
+      font-size: 14px;
     }
     
-    /* Secciones de contenido médico */
+    /* Medical Sections */
     .medical-section {
-      margin-bottom: 30px;
-      background: white;
+      margin-bottom: 25px;
       border: 1px solid #e8e8e8;
       border-radius: 8px;
       overflow: hidden;
@@ -174,30 +173,31 @@
     .section-header {
       background: #4A90E2;
       color: white;
-      padding: 15px 20px;
+      padding: 12px 20px;
       font-weight: 600;
-      font-size: 16px;
+      font-size: 14px;
       display: flex;
       align-items: center;
     }
     
     .section-header i {
-      margin-right: 10px;
-      font-size: 18px;
+      margin-right: 8px;
+      font-size: 16px;
     }
     
     .section-content {
       padding: 20px;
+      background: white;
     }
     
-    .symptoms-text, .diagnosis-text, .instructions-text {
-      font-size: 15px;
+    .content-text {
+      font-size: 14px;
       line-height: 1.6;
       color: #333;
       margin: 0;
     }
     
-    /* Lista de medicamentos */
+    /* Medication List */
     .medication-list {
       list-style: none;
       padding: 0;
@@ -208,96 +208,85 @@
       background: #f8f9ff;
       border: 1px solid #e3e8ff;
       border-radius: 6px;
-      padding: 15px 20px;
-      margin-bottom: 10px;
+      padding: 12px 15px;
+      margin-bottom: 8px;
       display: flex;
       align-items: center;
-      transition: all 0.2s ease;
-    }
-    
-    .medication-item:hover {
-      background: #f0f4ff;
-      border-color: #4A90E2;
     }
     
     .medication-number {
       background: #4A90E2;
       color: white;
-      width: 30px;
-      height: 30px;
+      width: 25px;
+      height: 25px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       font-weight: 600;
-      font-size: 14px;
-      margin-right: 15px;
+      font-size: 12px;
+      margin-right: 12px;
       flex-shrink: 0;
     }
     
     .medication-name {
-      font-size: 15px;
+      font-size: 13px;
       font-weight: 500;
       color: #333;
       flex: 1;
     }
     
-    /* Firma */
+    /* Diet Content */
+    .diet-content {
+      background: #f0f8f0;
+      border: 1px solid #d4edda;
+      border-radius: 8px;
+      padding: 20px;
+      font-size: 14px;
+      line-height: 1.6;
+      white-space: pre-line;
+    }
+    
+    /* Signature */
     .signature-section {
-      margin-top: 60px;
-      padding-top: 30px;
-      border-top: 2px solid #e8e8e8;
+      margin-top: auto;
+      padding-top: 40px;
       text-align: center;
     }
     
     .signature-line {
-      width: 300px;
-      height: 2px;
+      width: 250px;
+      height: 1px;
       background: #333;
-      margin: 40px auto 15px;
+      margin: 30px auto 10px;
     }
     
     .doctor-signature {
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 600;
       color: #333;
       margin-bottom: 5px;
     }
     
     .signature-details {
-      font-size: 14px;
+      font-size: 12px;
       color: #666;
-      line-height: 1.4;
+      line-height: 1.3;
     }
     
     /* Footer */
     .footer {
       background: linear-gradient(135deg, #4A90E2 0%, #357ABD 100%);
       color: white;
-      padding: 20px 40px;
+      padding: 15px 40px;
       margin-top: auto;
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .footer::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -20%;
-      width: 200px;
-      height: 200px;
-      background: rgba(255,255,255,0.1);
-      border-radius: 50%;
+      font-size: 12px;
     }
     
     .footer-content {
-      position: relative;
-      z-index: 2;
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
-      gap: 30px;
-      font-size: 14px;
+      gap: 20px;
     }
     
     .footer-item {
@@ -306,12 +295,36 @@
     }
     
     .footer-item i {
-      margin-right: 10px;
-      font-size: 16px;
+      margin-right: 8px;
+      font-size: 14px;
       opacity: 0.8;
     }
     
-    /* Estilos para impresión */
+    /* QR Code placeholders */
+    .qr-section {
+      position: absolute;
+      right: 40px;
+      bottom: 100px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    
+    .qr-placeholder {
+      width: 80px;
+      height: 80px;
+      background: #f0f0f0;
+      border: 2px dashed #ccc;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      color: #999;
+      text-align: center;
+    }
+    
+    /* Print Styles */
     @media print {
       body {
         background: white;
@@ -320,7 +333,7 @@
       
       .prescription-container {
         box-shadow: none;
-        max-width: none;
+        width: 100%;
         min-height: auto;
       }
       
@@ -328,34 +341,34 @@
         display: none !important;
       }
       
-      .footer {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        margin-top: 0;
+      .page-break {
+        page-break-before: always;
       }
     }
     
     /* Responsive */
     @media (max-width: 768px) {
-      .header-content {
-        flex-direction: column;
-        gap: 20px;
+      .prescription-container {
+        width: 100%;
+        margin: 0;
       }
       
-      .credentials {
-        text-align: left;
+      .header {
+        padding: 20px;
       }
       
-      .patient-details {
+      .content {
+        padding: 20px;
+      }
+      
+      .patient-info-grid {
         grid-template-columns: 1fr;
-        gap: 15px;
+        gap: 20px;
       }
       
       .footer-content {
         grid-template-columns: 1fr;
-        gap: 15px;
+        gap: 10px;
       }
     }
   </style>
@@ -366,54 +379,78 @@
     <div class="header">
       <div class="header-content">
         <div class="doctor-info">
-          <h1 class="doctor-name">Dr(a). [Nombre del Médico]</h1>
-          <p class="doctor-specialty">Médico Pediatra Certificado</p>
+          <h1>Dr. Moisés González Gallardo</h1>
+          <p>Médico Pediatra Certificado</p>
         </div>
         <div class="credentials">
-          <strong>CÉDULA PROFESIONAL 1234567</strong>
-          <div>CÉDULA DE ESPECIALIDAD 7654321</div>
+          <div><strong>CÉDULA PROFESIONAL 1234567</strong></div>
           <div>INSTITUTO MEXICANO DEL SEGURO SOCIAL</div>
-          <div>CONSULTORIO PEDIÁTRICO ESPECIALIZADO</div>
+          <div>CALLE CUALQUIERA 123, CUALQUIER LUGAR</div>
         </div>
       </div>
-      <i class="fas fa-baby pediatric-icon"></i>
+      <div class="logo-section">
+        <div class="logo-icon">
+          <i class="fas fa-baby"></i>
+        </div>
+        <div class="logo-text">PEDIATRÍA</div>
+      </div>
     </div>
 
-    <!-- Contenido -->
+    <!-- Content -->
     <div class="content">
-      <!-- Información del paciente -->
-      <div class="patient-info">
-        <h3><i class="fas fa-child"></i>INFORMACIÓN DEL PACIENTE</h3>
-        <div class="patient-details">
-          <div class="patient-field">
-            <label>PACIENTE:</label>
-            <div class="value">{{ paciente.nombre }}</div>
+      <!-- Patient Information Grid -->
+      <div class="patient-info-grid">
+        <div class="patient-section">
+          <h3><i class="fas fa-child"></i>DATOS DEL PACIENTE</h3>
+          <div class="info-row">
+            <span class="info-label">Nombre:</span>
+            <span class="info-value">{{ paciente.nombre }}</span>
           </div>
-          <div class="patient-field">
-            <label>FECHA:</label>
-            <div class="value">{{ fecha_actual.strftime("%d/%m/%Y") }}</div>
+          <div class="info-row">
+            <span class="info-label">Fecha Nacimiento:</span>
+            <span class="info-value">{{ paciente.edad or 'No especificada' }}</span>
           </div>
-          <div class="patient-field">
-            <label>EDAD:</label>
-            <div class="value">{{ paciente.edad or 'No especificada' }}</div>
+          <div class="info-row">
+            <span class="info-label">Peso:</span>
+            <span class="info-value">{{ paciente.peso or '_____' }} Kg</span>
           </div>
-        </div>
-        {% if paciente.telefono %}
-        <div class="patient-details mt-3">
-          <div class="patient-field">
-            <label>TELÉFONO:</label>
-            <div class="value">{{ paciente.telefono }}</div>
+          <div class="info-row">
+            <span class="info-label">Talla:</span>
+            <span class="info-value">{{ paciente.talla or '_____' }} Mts</span>
           </div>
-          <div class="patient-field">
-            <label>HORA:</label>
-            <div class="value">{{ fecha_actual.strftime("%H:%M") }}</div>
-          </div>
-          <div class="patient-field">
-            <label>CONSULTA:</label>
-            <div class="value">#{{ indice + 1 }}</div>
+          <div class="info-row">
+            <span class="info-label">PC:</span>
+            <span class="info-value">{{ paciente.pc or '_____' }} Cms</span>
           </div>
         </div>
-        {% endif %}
+        
+        <div class="patient-section">
+          <h3><i class="fas fa-calendar"></i>INFORMACIÓN DE CONSULTA</h3>
+          <div class="info-row">
+            <span class="info-label">Fecha:</span>
+            <span class="info-value">{{ fecha_actual.strftime("%d/%m/%Y") }}</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Hora:</span>
+            <span class="info-value">{{ fecha_actual.strftime("%H:%M") }}</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Estatura:</span>
+            <span class="info-value">{{ paciente.talla or '_____' }} Mts</span>
+          </div>
+          {% if paciente.nombre_familiar %}
+          <div class="info-row">
+            <span class="info-label">Responsable:</span>
+            <span class="info-value">{{ paciente.nombre_familiar }}</span>
+          </div>
+          {% endif %}
+          {% if paciente.telefono %}
+          <div class="info-row">
+            <span class="info-label">Teléfono:</span>
+            <span class="info-value">{{ paciente.telefono }}</span>
+          </div>
+          {% endif %}
+        </div>
       </div>
 
       {% if receta.sintomas %}
@@ -424,7 +461,7 @@
           SÍNTOMAS PRESENTADOS
         </div>
         <div class="section-content">
-          <p class="symptoms-text">{{ receta.sintomas }}</p>
+          <p class="content-text">{{ receta.sintomas }}</p>
         </div>
       </div>
       {% endif %}
@@ -436,10 +473,11 @@
           DIAGNÓSTICO MÉDICO
         </div>
         <div class="section-content">
-          <p class="diagnosis-text">{{ receta.diagnostico }}</p>
+          <p class="content-text">{{ receta.diagnostico }}</p>
         </div>
       </div>
 
+      {% if receta.tipo == 'diagnostico' and receta.receta %}
       <!-- Medicamentos -->
       <div class="medical-section">
         <div class="section-header">
@@ -457,6 +495,20 @@
           </ul>
         </div>
       </div>
+      {% endif %}
+
+      {% if receta.tipo == 'dieta' and receta.dieta_contenido %}
+      <!-- Plan de Dieta -->
+      <div class="medical-section">
+        <div class="section-header">
+          <i class="fas fa-utensils"></i>
+          PLAN DE ALIMENTACIÓN
+        </div>
+        <div class="section-content">
+          <div class="diet-content">{{ receta.dieta_contenido }}</div>
+        </div>
+      </div>
+      {% endif %}
 
       {% if receta.indicaciones %}
       <!-- Indicaciones -->
@@ -466,19 +518,29 @@
           INDICACIONES ESPECIALES
         </div>
         <div class="section-content">
-          <p class="instructions-text">{{ receta.indicaciones }}</p>
+          <p class="content-text">{{ receta.indicaciones }}</p>
         </div>
       </div>
       {% endif %}
 
-      <!-- Firma -->
+      <!-- Signature -->
       <div class="signature-section">
         <div class="signature-line"></div>
-        <div class="doctor-signature">Dr(a). [Nombre del Médico]</div>
+        <div class="doctor-signature">Dr. Moisés González Gallardo</div>
         <div class="signature-details">
           Médico Pediatra Certificado<br>
-          Cédula Profesional: 1234567 | Cédula de Especialidad: 7654321
+          Cédula Profesional: 1234567
         </div>
+      </div>
+    </div>
+
+    <!-- QR Codes (placeholders) -->
+    <div class="qr-section print-hidden">
+      <div class="qr-placeholder">
+        <div>QR<br>Receta</div>
+      </div>
+      <div class="qr-placeholder">
+        <div>QR<br>Verificación</div>
       </div>
     </div>
 
@@ -487,46 +549,106 @@
       <div class="footer-content">
         <div class="footer-item">
           <i class="fas fa-envelope"></i>
-          <div>
-            <strong>consultorio@pediatra.com</strong><br>
-            www.consultoriopediatrico.com
-          </div>
+          <div>hola@sitioincrieble.com<br>www.sitioincrieble.com</div>
         </div>
         <div class="footer-item">
           <i class="fas fa-phone"></i>
-          <div>
-            <strong>(55) 1234 5678</strong><br>
-            Calle Principal 123, Ciudad
-          </div>
+          <div>(55) 1234 5678<br>Calle Cualquiera 123, Cualquier Lugar</div>
         </div>
         <div class="footer-item">
           <i class="fas fa-clock"></i>
-          <div>
-            <strong>Horario: Lunes a Viernes 8:00am - 5:00pm</strong><br>
-            Sábados 9:00am - 2:00pm
-          </div>
+          <div>Horario: Lunes a Viernes 8:00am - 5:00pm<br>Sábados 9:00am - 2:00pm</div>
         </div>
       </div>
     </div>
   </div>
   
-  <!-- Botones de acción -->
-  <div class="text-center print-hidden mt-4 mb-4">
-    <div class="d-flex gap-3 justify-content-center">
-      <button onclick="window.print()" class="btn btn-primary btn-lg">
-        <i class="fas fa-print me-2"></i>Imprimir Receta
+  <!-- Action Buttons -->
+  <div class="text-center print-hidden" style="margin-top: 30px;">
+    <div style="display: flex; gap: 15px; justify-content: center;">
+      <button onclick="window.print()" style="background: #4A90E2; color: white; border: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; cursor: pointer;">
+        <i class="fas fa-print" style="margin-right: 8px;"></i>Imprimir Receta
       </button>
-      <a href="/historial/{{ paciente._id }}" class="btn btn-outline-secondary btn-lg">
-        <i class="fas fa-arrow-left me-2"></i>Volver al Historial
+      <a href="/historial/{{ paciente._id }}" style="background: #6c757d; color: white; border: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center;">
+        <i class="fas fa-arrow-left" style="margin-right: 8px;"></i>Volver al Historial
       </a>
     </div>
   </div>
 
-  <script>
-    // Auto-print cuando se carga la página (opcional)
-    // window.addEventListener('load', function() {
-    //   setTimeout(() => window.print(), 1000);
-    // });
-  </script>
+  <!-- Back of prescription (page 2) -->
+  <div class="prescription-container page-break" style="margin-top: 40px;">
+    <div style="padding: 40px; height: 100%; background: #f8f9fa; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
+      
+      <!-- QR Codes Section -->
+      <div style="margin-bottom: 40px;">
+        <h3 style="color: #4A90E2; margin-bottom: 30px; font-weight: 600;">
+          <i class="fas fa-qrcode me-2"></i>
+          Códigos de Verificación
+        </h3>
+        
+        <div style="display: flex; flex-direction: column; gap: 30px; align-items: center;">
+          <div style="text-align: center;">
+            <div style="width: 120px; height: 120px; background: white; border: 2px solid #4A90E2; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px;">
+              <i class="fas fa-qrcode" style="font-size: 60px; color: #4A90E2;"></i>
+            </div>
+            <p style="margin: 0; font-size: 12px; color: #666;">
+              En caso de urgencia o Alergia<br>
+              escanea el código QR para obtener<br>
+              el historial médico y alergias
+            </p>
+          </div>
+          
+          <div style="text-align: center;">
+            <div style="width: 120px; height: 120px; background: white; border: 2px solid #28a745; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px;">
+              <i class="fas fa-qrcode" style="font-size: 60px; color: #28a745;"></i>
+            </div>
+            <p style="margin: 0; font-size: 12px; color: #666;">
+              Código de verificación<br>
+              para validar la autenticidad<br>
+              de esta receta médica
+            </p>
+          </div>
+          
+          <div style="text-align: center;">
+            <div style="width: 120px; height: 120px; background: white; border: 2px solid #dc3545; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px;">
+              <i class="fas fa-qrcode" style="font-size: 60px; color: #dc3545;"></i>
+            </div>
+            <p style="margin: 0; font-size: 12px; color: #666;">
+              Código de acceso<br>
+              al expediente digital<br>
+              del paciente
+            </p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Important Notes -->
+      <div style="background: white; border-radius: 12px; padding: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); max-width: 500px;">
+        <h4 style="color: #dc3545; margin-bottom: 15px; font-weight: 600;">
+          <i class="fas fa-exclamation-triangle me-2"></i>
+          Información Importante
+        </h4>
+        <ul style="text-align: left; font-size: 13px; line-height: 1.6; color: #555; margin: 0; padding-left: 20px;">
+          <li>Esta receta es válida únicamente con la firma y sello del médico</li>
+          <li>Conserve este documento para futuras consultas</li>
+          <li>En caso de reacciones adversas, suspenda el tratamiento y consulte inmediatamente</li>
+          <li>No automedicarse ni modificar las dosis prescritas</li>
+          <li>Mantenga los medicamentos fuera del alcance de los niños</li>
+        </ul>
+      </div>
+      
+      <!-- Emergency Contact -->
+      <div style="margin-top: 30px; background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 8px; padding: 20px; max-width: 400px;">
+        <h5 style="color: #856404; margin-bottom: 10px; font-weight: 600;">
+          <i class="fas fa-phone-alt me-2"></i>
+          Contacto de Emergencia
+        </h5>
+        <p style="margin: 0; font-size: 14px; color: #856404;">
+          <strong>24 horas:</strong> (55) 1234 5678<br>
+          <strong>WhatsApp:</strong> (55) 9876 5432
+        </p>
+      </div>
+    </div>
+  </div>
 </body>
 </html>

@@ -21,15 +21,19 @@
                     <h6 class="card-title mb-1">Datos del Paciente</h6>
                     <p class="mb-1"><strong>Nombre:</strong> {{ paciente.nombre }}</p>
                     <p class="mb-1"><strong>Edad:</strong> {{ paciente.edad or 'No especificada' }}</p>
-                    <p class="mb-0"><strong>Teléfono:</strong> {{ paciente.telefono or 'No especificado' }}</p>
+                    <p class="mb-1"><strong>Peso:</strong> {{ paciente.peso or 'No especificado' }} kg</p>
+                    <p class="mb-1"><strong>Talla:</strong> {{ paciente.talla or 'No especificada' }} m</p>
+                    <p class="mb-0"><strong>PC:</strong> {{ paciente.pc or 'No especificado' }} cm</p>
                   </div>
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="card bg-light">
                   <div class="card-body py-2">
-                    <h6 class="card-title mb-1">Fecha de Consulta</h6>
-                    <input type="date" class="form-control" id="fechaConsulta" value="" readonly>
+                    <h6 class="card-title mb-1">Datos del Responsable</h6>
+                    <p class="mb-1"><strong>Familiar:</strong> {{ paciente.nombre_familiar or 'No especificado' }}</p>
+                    <p class="mb-1"><strong>Teléfono:</strong> {{ paciente.telefono or 'No especificado' }}</p>
+                    <p class="mb-0"><strong>Fecha Consulta:</strong> {{ paciente.fecha_consulta or 'Hoy' }}</p>
                   </div>
                 </div>
               </div>
@@ -56,6 +60,7 @@
             </div>
 
             <!-- Medicamentos -->
+            {% if tipo == 'diagnostico' %}
             <div class="mb-4">
               <label class="form-label fw-bold">
                 <i class="fas fa-pills me-2 text-primary"></i>
@@ -71,6 +76,22 @@
                 Busque y seleccione los medicamentos. Puede seleccionar múltiples opciones.
               </div>
             </div>
+            {% endif %}
+            
+            {% if tipo == 'dieta' %}
+            <div class="mb-4">
+              <label class="form-label fw-bold">
+                <i class="fas fa-utensils me-2 text-success"></i>
+                Plan de Alimentación
+              </label>
+              <textarea name="dieta_contenido" class="form-control" rows="6" required 
+                        placeholder="Describa el plan de alimentación detallado para el paciente..."></textarea>
+              <div class="form-text">
+                <i class="fas fa-info-circle me-1"></i>
+                Incluya horarios, porciones, alimentos recomendados y restricciones.
+              </div>
+            </div>
+            {% endif %}
 
             <!-- Indicaciones Adicionales -->
             <div class="mb-4">
@@ -139,6 +160,15 @@
                 <em>Se mostrarán aquí...</em>
               </div>
             </div>
+            
+            {% if tipo == 'dieta' %}
+            <div class="mb-2">
+              <small><strong>Plan de Dieta:</strong></small>
+              <div id="dietaPreview" class="text-muted small">
+                <em>Se mostrará aquí...</em>
+              </div>
+            </div>
+            {% endif %}
             
             <div class="mb-2">
               <small><strong>Indicaciones:</strong></small>
@@ -216,10 +246,12 @@ document.addEventListener("DOMContentLoaded", function() {
   // Vista previa en tiempo real
   const diagnosticoInput = document.querySelector('textarea[name="diagnostico"]');
   const indicacionesInput = document.querySelector('textarea[name="indicaciones"]');
+  const dietaInput = document.querySelector('textarea[name="dieta_contenido"]');
   const medicamentosSelect = document.getElementById('medicamentos');
   
   const diagnosticoPreview = document.getElementById('diagnosticoPreview');
   const indicacionesPreview = document.getElementById('indicacionesPreview');
+  const dietaPreview = document.getElementById('dietaPreview');
   const medicamentosPreview = document.getElementById('medicamentosPreview');
   
   function updatePreview() {
@@ -236,22 +268,39 @@ document.addEventListener("DOMContentLoaded", function() {
       '<em>Se mostrarán aquí...</em>';
     
     // Actualizar medicamentos
-    const selectedMeds = Array.from(medicamentosSelect.selectedOptions).map(option => option.value);
-    if (selectedMeds.length > 0) {
-      medicamentosPreview.innerHTML = selectedMeds.map(med => `<small>• ${med}</small>`).join('<br>');
-    } else {
-      medicamentosPreview.innerHTML = '<em>Se mostrarán aquí...</em>';
+    if (medicamentosSelect) {
+      const selectedMeds = Array.from(medicamentosSelect.selectedOptions).map(option => option.value);
+      if (selectedMeds.length > 0) {
+        medicamentosPreview.innerHTML = selectedMeds.map(med => `<small>• ${med}</small>`).join('<br>');
+      } else {
+        medicamentosPreview.innerHTML = '<em>Se mostrarán aquí...</em>';
+      }
+    }
+    
+    // Actualizar dieta
+    if (dietaInput && dietaPreview) {
+      const dieta = dietaInput.value.trim();
+      dietaPreview.innerHTML = dieta ? 
+        `<small>${dieta}</small>` : 
+        '<em>Se mostrará aquí...</em>';
     }
   }
   
   // Event listeners para vista previa
   diagnosticoInput.addEventListener('input', updatePreview);
   indicacionesInput.addEventListener('input', updatePreview);
-  medicamentosSelect.addEventListener('change', updatePreview);
+  if (medicamentosSelect) {
+    medicamentosSelect.addEventListener('change', updatePreview);
+  }
+  if (dietaInput) {
+    dietaInput.addEventListener('input', updatePreview);
+  }
   
   // Para Select2
   if (window.jQuery) {
-    $('#medicamentos').on('change', updatePreview);
+    if ($('#medicamentos').length) {
+      $('#medicamentos').on('change', updatePreview);
+    }
   }
 });
 </script>
