@@ -47,12 +47,54 @@
           </div>
           <div class="form-group">
             <label class="form-label">
+              <i class="fas fa-weight me-2"></i>
+              Peso (kg)
+            </label>
+            <input type="text" name="peso" class="form-input" placeholder="Ej: 15.5">
+          </div>
+          <div class="form-group">
+            <label class="form-label">
+              <i class="fas fa-ruler-vertical me-2"></i>
+              Talla (m)
+            </label>
+            <input type="text" name="talla" class="form-input" placeholder="Ej: 1.05">
+          </div>
+          <div class="form-group">
+            <label class="form-label">
+              <i class="fas fa-head-side-brain me-2"></i>
+              PC (cm)
+            </label>
+            <input type="text" name="pc" class="form-input" placeholder="Perímetro cefálico">
+          </div>
+          <div class="form-group">
+            <label class="form-label">
+              <i class="fas fa-calendar me-2"></i>
+              Fecha de Consulta
+            </label>
+            <input type="date" name="fecha_consulta" class="form-input">
+          </div>
+          <div class="form-group">
+            <label class="form-label">
+              <i class="fas fa-user me-2"></i>
+              Nombre del Padre/Madre
+            </label>
+            <input type="text" name="nombre_familiar" class="form-input" placeholder="Nombre del responsable">
+          </div>
+          <div class="form-group">
+            <label class="form-label">
+              <i class="fas fa-birthday-cake me-2"></i>
+              Edad del Padre/Madre
+            </label>
+            <input type="text" name="edad_familiar" class="form-input" placeholder="Edad del responsable">
+          </div>
+          <div class="form-group">
+            <label class="form-label">
               <i class="fas fa-phone me-2"></i>
               Teléfono de Contacto
             </label>
             <input type="tel" name="telefono" class="form-input" placeholder="Número de teléfono">
           </div>
-          <div class="form-group form-actions">
+          <div class="form-group form-actions" style="grid-column: span 3;">
             <button type="submit" class="btn-add-patient">
               <i class="fas fa-plus me-2"></i>
               Agregar Paciente
@@ -89,6 +131,7 @@
               </th>
               <th class="th-name">Nombre del Paciente</th>
               <th class="th-age">Edad</th>
+              <th class="th-parent">Responsable</th>
               <th class="th-phone">Teléfono</th>
               <th class="th-actions">Acciones</th>
             </tr>
@@ -110,6 +153,18 @@
               <td class="td-age">
                 <span class="age-badge">{{ p.edad or 'No especificada' }}</span>
               </td>
+              <td class="td-parent">
+                <div class="parent-info">
+                  {% if p.nombre_familiar %}
+                    <div class="parent-name">{{ p.nombre_familiar }}</div>
+                    {% if p.edad_familiar %}
+                      <small class="parent-age">{{ p.edad_familiar }} años</small>
+                    {% endif %}
+                  {% else %}
+                    <span class="no-parent">No especificado</span>
+                  {% endif %}
+                </div>
+              </td>
               <td class="td-phone">
                 <div class="phone-info">
                   {% if p.telefono %}
@@ -122,10 +177,20 @@
               </td>
               <td class="td-actions">
                 <div class="action-buttons">
-                  <a href="/receta/{{ p._id }}" class="btn-action btn-prescription" title="Crear Receta">
-                    <i class="fas fa-prescription-bottle-alt"></i>
-                    <span>Receta</span>
-                  </a>
+                  <div class="dropdown">
+                    <button class="btn-action btn-prescription dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      <i class="fas fa-prescription-bottle-alt"></i>
+                      <span>Receta</span>
+                    </button>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="/receta/{{ p._id }}/diagnostico">
+                        <i class="fas fa-pills me-2"></i>Receta con Medicamentos
+                      </a></li>
+                      <li><a class="dropdown-item" href="/receta/{{ p._id }}/dieta">
+                        <i class="fas fa-utensils me-2"></i>Plan de Alimentación
+                      </a></li>
+                    </ul>
+                  </div>
                   <a href="/historial/{{ p._id }}" class="btn-action btn-history" title="Ver Historial">
                     <i class="fas fa-history"></i>
                     <span>Historial</span>
@@ -459,6 +524,57 @@
   font-style: italic;
 }
 
+.parent-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.parent-name {
+  font-weight: 500;
+  color: #374151;
+  font-size: 0.9rem;
+}
+
+.parent-age {
+  color: #6b7280;
+  font-size: 0.8rem;
+}
+
+.no-parent {
+  color: #9ca3af;
+  font-style: italic;
+  font-size: 0.85rem;
+}
+
+.dropdown-toggle {
+  background: #dbeafe !important;
+  color: #1e40af !important;
+  border: none;
+}
+
+.dropdown-toggle:hover {
+  background: #1e40af !important;
+  color: white !important;
+}
+
+.dropdown-menu {
+  border: none;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+}
+
+.dropdown-item {
+  padding: 10px 16px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+}
+
+.dropdown-item:hover {
+  background: #f8f9ff;
+  color: #4c63d2;
+}
+
 .action-buttons {
   display: flex;
   gap: 8px;
@@ -525,7 +641,7 @@
   }
   
   .form-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(3, 1fr);
     gap: 15px;
   }
   
