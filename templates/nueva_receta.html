@@ -81,15 +81,22 @@
             {% if tipo == 'dieta' %}
             <div class="mb-4">
               <label class="form-label fw-bold">
-                <i class="fas fa-utensils me-2 text-success"></i>
-                Plan de Alimentación
+                <i class="fas fa-baby me-2 text-success"></i>
+                Seleccionar Tipo de Dieta
               </label>
-              <textarea name="dieta_contenido" class="form-control" rows="6" required 
-                        placeholder="Describa el plan de alimentación detallado para el paciente..."></textarea>
+              <select name="tipo_dieta" class="form-control" required id="tipoDietaSelect">
+                <option value="">Seleccione el tipo de dieta...</option>
+                <option value="6_meses">Dieta de 6 meses</option>
+                <option value="7_meses">Dieta de 7 meses</option>
+                <option value="8_meses">Dieta de 8 meses</option>
+                <option value="9_12_meses">Dieta de 9 a 12 meses</option>
+                <option value="1_2_anos">Dieta de 1 a 2 años</option>
+              </select>
               <div class="form-text">
                 <i class="fas fa-info-circle me-1"></i>
-                Incluya horarios, porciones, alimentos recomendados y restricciones.
+                Seleccione la dieta apropiada según la edad del paciente.
               </div>
+              <input type="hidden" name="dieta_contenido" id="dietaContenidoHidden">
             </div>
             {% endif %}
 
@@ -284,6 +291,17 @@ document.addEventListener("DOMContentLoaded", function() {
         `<small>${dieta}</small>` : 
         '<em>Se mostrará aquí...</em>';
     }
+    
+    // Actualizar dieta desde select
+    const tipoDietaSelect = document.getElementById('tipoDietaSelect');
+    if (tipoDietaSelect && dietaPreview) {
+      const selectedDiet = tipoDietaSelect.value;
+      if (selectedDiet) {
+        dietaPreview.innerHTML = `<small>Dieta seleccionada: ${tipoDietaSelect.options[tipoDietaSelect.selectedIndex].text}</small>`;
+      } else {
+        dietaPreview.innerHTML = '<em>Se mostrará aquí...</em>';
+      }
+    }
   }
   
   // Event listeners para vista previa
@@ -294,6 +312,16 @@ document.addEventListener("DOMContentLoaded", function() {
   }
   if (dietaInput) {
     dietaInput.addEventListener('input', updatePreview);
+  }
+  
+  // Event listener para select de dieta
+  const tipoDietaSelect = document.getElementById('tipoDietaSelect');
+  if (tipoDietaSelect) {
+    tipoDietaSelect.addEventListener('change', function() {
+      const hiddenInput = document.getElementById('dietaContenidoHidden');
+      hiddenInput.value = this.value;
+      updatePreview();
+    });
   }
   
   // Para Select2

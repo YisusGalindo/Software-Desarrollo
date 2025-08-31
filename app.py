@@ -1,11 +1,21 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
+from flask_mail import Mail, Message
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 from datetime import datetime
-from config import MONGO_URI, DB_NAME, HOST, PORT, DEBUG
+from config import MONGO_URI, DB_NAME, HOST, PORT, DEBUG, MAIL_SERVER, MAIL_PORT, MAIL_USE_TLS, MAIL_USERNAME, MAIL_PASSWORD, DOCTOR_EMAIL
 
 app = Flask(__name__)
 app.secret_key = "cambia-esta-clave"
+
+# Configuración de correo
+app.config['MAIL_SERVER'] = MAIL_SERVER
+app.config['MAIL_PORT'] = MAIL_PORT
+app.config['MAIL_USE_TLS'] = MAIL_USE_TLS
+app.config['MAIL_USERNAME'] = MAIL_USERNAME
+app.config['MAIL_PASSWORD'] = MAIL_PASSWORD
+
+mail = Mail(app)
 
 # Filtro personalizado para formatear fechas
 @app.template_filter('strftime')

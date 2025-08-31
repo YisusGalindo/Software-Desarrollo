@@ -23,8 +23,8 @@
     }
     
     .prescription-container {
-      width: 210mm;
-      min-height: 297mm;
+      width: 297mm; /* A4 horizontal */
+      min-height: 210mm;
       margin: 0 auto;
       background: white;
       box-shadow: 0 0 20px rgba(0,0,0,0.1);
@@ -35,49 +35,33 @@
     
     /* Header */
     .header {
-      background: linear-gradient(135deg, #4A90E2 0%, #357ABD 100%);
-      color: white;
-      padding: 25px 40px;
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .header::before {
-      content: '';
-      position: absolute;
-      top: -50px;
-      right: -50px;
-      width: 200px;
-      height: 200px;
-      background: rgba(255,255,255,0.1);
-      border-radius: 50%;
-    }
-    
-    .header-content {
-      position: relative;
-      z-index: 2;
+      background: white;
+      padding: 20px 30px;
+      border-bottom: 3px solid #4A90E2;
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
     }
     
     .doctor-info h1 {
-      font-size: 24px;
+      font-size: 28px;
       font-weight: 700;
       margin: 0 0 5px 0;
+      color: #2c3e50;
       letter-spacing: -0.5px;
     }
     
-    .doctor-info p {
+    .doctor-info .subtitle {
+      color: #4A90E2;
       font-size: 16px;
-      margin: 0;
-      opacity: 0.9;
+      font-weight: 500;
+      margin-bottom: 15px;
     }
     
     .credentials {
-      text-align: right;
-      font-size: 12px;
-      line-height: 1.4;
+      font-size: 11px;
+      line-height: 1.3;
+      color: #666;
     }
     
     .credentials div {
@@ -85,86 +69,84 @@
     }
     
     .logo-section {
-      position: absolute;
-      right: 40px;
-      top: 50%;
-      transform: translateY(-50%);
       text-align: center;
+      display: flex;
+      align-items: center;
+      gap: 15px;
     }
     
-    .logo-icon {
-      font-size: 50px;
-      opacity: 0.3;
-      margin-bottom: 5px;
+    .logo-icons {
+      display: flex;
+      gap: 10px;
+      font-size: 40px;
+      color: #4A90E2;
     }
     
     .logo-text {
-      font-size: 14px;
-      font-weight: 600;
-      opacity: 0.8;
-    }
-    
-    /* Content */
-    .content {
-      flex: 1;
-      padding: 30px 40px;
-    }
-    
-    /* Patient Info Grid */
-    .patient-info-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 30px;
-      margin-bottom: 30px;
-      background: #f8f9ff;
-      padding: 25px;
-      border-radius: 8px;
-      border-left: 4px solid #4A90E2;
-    }
-    
-    .patient-section h3 {
+      font-size: 24px;
+      font-weight: 700;
       color: #4A90E2;
-      font-size: 16px;
-      font-weight: 600;
-      margin-bottom: 15px;
-      display: flex;
+      letter-spacing: 2px;
+    }
+    
+    /* Patient Info Section */
+    .patient-section {
+      padding: 20px 30px;
+      background: #f8f9ff;
+      border-bottom: 1px solid #e3e8ff;
+    }
+    
+    .patient-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 20px;
       align-items: center;
     }
     
-    .patient-section h3 i {
-      margin-right: 8px;
-    }
-    
-    .info-row {
+    .patient-field {
       display: flex;
-      justify-content: space-between;
-      margin-bottom: 8px;
-      padding-bottom: 5px;
-      border-bottom: 1px dotted #ddd;
+      align-items: center;
+      gap: 8px;
     }
     
-    .info-row:last-child {
-      border-bottom: none;
-      margin-bottom: 0;
-    }
-    
-    .info-label {
+    .field-label {
       font-weight: 600;
-      color: #666;
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
+      color: #374151;
+      font-size: 14px;
+      min-width: fit-content;
     }
     
-    .info-value {
-      font-weight: 500;
-      color: #333;
+    .field-value {
+      border-bottom: 1px solid #333;
+      min-width: 80px;
+      padding-bottom: 2px;
       font-size: 14px;
+      color: #333;
+    }
+    
+    /* Content Area */
+    .content {
+      flex: 1;
+      padding: 20px 30px;
+      display: flex;
+      gap: 20px;
+    }
+    
+    .left-column {
+      flex: 1;
+    }
+    
+    .right-column {
+      width: 300px;
+      background: #f8f9ff;
+      border-radius: 12px;
+      padding: 20px;
+      border: 2px solid #e3e8ff;
     }
     
     /* Medical Sections */
     .medical-section {
-      margin-bottom: 25px;
+      margin-bottom: 20px;
       border: 1px solid #e8e8e8;
       border-radius: 8px;
       overflow: hidden;
@@ -173,7 +155,7 @@
     .section-header {
       background: #4A90E2;
       color: white;
-      padding: 12px 20px;
+      padding: 10px 20px;
       font-weight: 600;
       font-size: 14px;
       display: flex;
@@ -186,13 +168,13 @@
     }
     
     .section-content {
-      padding: 20px;
+      padding: 15px 20px;
       background: white;
     }
     
     .content-text {
-      font-size: 14px;
-      line-height: 1.6;
+      font-size: 13px;
+      line-height: 1.5;
       color: #333;
       margin: 0;
     }
@@ -208,8 +190,8 @@
       background: #f8f9ff;
       border: 1px solid #e3e8ff;
       border-radius: 6px;
-      padding: 12px 15px;
-      margin-bottom: 8px;
+      padding: 10px 12px;
+      margin-bottom: 6px;
       display: flex;
       align-items: center;
     }
@@ -217,20 +199,20 @@
     .medication-number {
       background: #4A90E2;
       color: white;
-      width: 25px;
-      height: 25px;
+      width: 22px;
+      height: 22px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       font-weight: 600;
-      font-size: 12px;
-      margin-right: 12px;
+      font-size: 11px;
+      margin-right: 10px;
       flex-shrink: 0;
     }
     
     .medication-name {
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 500;
       color: #333;
       flex: 1;
@@ -241,87 +223,90 @@
       background: #f0f8f0;
       border: 1px solid #d4edda;
       border-radius: 8px;
-      padding: 20px;
-      font-size: 14px;
-      line-height: 1.6;
+      padding: 15px;
+      font-size: 12px;
+      line-height: 1.4;
       white-space: pre-line;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+    
+    .diet-title {
+      color: #28a745;
+      font-weight: 700;
+      font-size: 16px;
+      margin-bottom: 15px;
+      text-align: center;
+      border-bottom: 2px solid #28a745;
+      padding-bottom: 8px;
+    }
+    
+    .diet-schedule {
+      margin-bottom: 15px;
+    }
+    
+    .diet-time {
+      font-weight: 600;
+      color: #2c3e50;
+      margin-bottom: 5px;
+    }
+    
+    .diet-food {
+      margin-left: 15px;
+      margin-bottom: 8px;
+      color: #555;
+    }
+    
+    .diet-notes {
+      background: #fff3cd;
+      border: 1px solid #ffeaa7;
+      border-radius: 6px;
+      padding: 10px;
+      margin-top: 15px;
+    }
+    
+    .diet-notes h4 {
+      color: #856404;
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+    
+    .diet-notes ul {
+      margin: 0;
+      padding-left: 15px;
+    }
+    
+    .diet-notes li {
+      margin-bottom: 4px;
+      font-size: 11px;
+      color: #856404;
     }
     
     /* Signature */
     .signature-section {
       margin-top: auto;
-      padding-top: 40px;
+      padding: 20px 30px;
       text-align: center;
     }
     
     .signature-line {
-      width: 250px;
+      width: 200px;
       height: 1px;
       background: #333;
-      margin: 30px auto 10px;
+      margin: 20px auto 8px;
     }
     
     .doctor-signature {
       font-size: 16px;
       font-weight: 600;
       color: #333;
-      margin-bottom: 5px;
+      margin-bottom: 3px;
     }
     
     .signature-details {
-      font-size: 12px;
+      font-size: 11px;
       color: #666;
-      line-height: 1.3;
-    }
-    
-    /* Footer */
-    .footer {
-      background: linear-gradient(135deg, #4A90E2 0%, #357ABD 100%);
-      color: white;
-      padding: 15px 40px;
-      margin-top: auto;
-      font-size: 12px;
-    }
-    
-    .footer-content {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 20px;
-    }
-    
-    .footer-item {
-      display: flex;
-      align-items: center;
-    }
-    
-    .footer-item i {
-      margin-right: 8px;
-      font-size: 14px;
-      opacity: 0.8;
-    }
-    
-    /* QR Code placeholders */
-    .qr-section {
-      position: absolute;
-      right: 40px;
-      bottom: 100px;
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-    }
-    
-    .qr-placeholder {
-      width: 80px;
-      height: 80px;
-      background: #f0f0f0;
-      border: 2px dashed #ccc;
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 10px;
-      color: #999;
-      text-align: center;
+      line-height: 1.2;
     }
     
     /* Print Styles */
@@ -341,34 +326,45 @@
         display: none !important;
       }
       
-      .page-break {
-        page-break-before: always;
+      @page {
+        size: A4 landscape;
+        margin: 0.5in;
       }
     }
     
     /* Responsive */
-    @media (max-width: 768px) {
+    @media (max-width: 1200px) {
       .prescription-container {
         width: 100%;
         margin: 0;
       }
       
+      .content {
+        flex-direction: column;
+      }
+      
+      .right-column {
+        width: 100%;
+      }
+      
+      .patient-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    
+    @media (max-width: 768px) {
       .header {
-        padding: 20px;
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+      }
+      
+      .patient-grid {
+        grid-template-columns: 1fr 1fr;
       }
       
       .content {
-        padding: 20px;
-      }
-      
-      .patient-info-grid {
-        grid-template-columns: 1fr;
-        gap: 20px;
-      }
-      
-      .footer-content {
-        grid-template-columns: 1fr;
-        gap: 10px;
+        padding: 15px;
       }
     }
   </style>
@@ -377,189 +373,390 @@
   <div class="prescription-container">
     <!-- Header -->
     <div class="header">
-      <div class="header-content">
-        <div class="doctor-info">
-          <h1>Dr. Moisés González Gallardo</h1>
-          <p>Médico Pediatra Certificado</p>
-        </div>
+      <div class="doctor-info">
+        <h1>Dr. Moisés González Gallardo</h1>
+        <div class="subtitle">Recién Nacidos, Niños, Adolescentes y Jóvenes</div>
         <div class="credentials">
-          <div><strong>CÉDULA PROFESIONAL 1234567</strong></div>
-          <div>INSTITUTO MEXICANO DEL SEGURO SOCIAL</div>
-          <div>CALLE CUALQUIERA 123, CUALQUIER LUGAR</div>
+          <div><strong>Torre Médica</strong></div>
+          <div>Hosp. de Esp. Médicas de la Salud</div>
+          <div>Av. Benito Juárez No. 1210 (Col.57)</div>
+          <div>Interior 208 C.P. 78399</div>
+          <div>San Luis Potosí, S.L.P.</div>
+          <div>Piso 2 consultorio 208</div>
+          <div>Lunes a viernes 10 a 14 Hrs.</div>
+          <div>Y de 16 a 20 Hrs.</div>
+          <div>Sábados de 10 a 14 Hrs.</div>
+          <div><strong>TEL 444 128 6020 Y 444 833 0341</strong></div>
+          <div>Citas Whatsapp: 44 43 59 88 01</div>
+          <div>CEL 44 42 09 29 57</div>
+          <div><strong>D.G.P. 1330601</strong></div>
+          <div>Cert. Consejo No. 5993</div>
+          <div>S.S.A. S.L.P. 947/89-MC-PM</div>
+          <div>S.E.P. AECEM 24144</div>
+          <div>U.A.S.L.P.</div>
+          <div>correo: conspediamgg@gmail.com</div>
         </div>
       </div>
+      
       <div class="logo-section">
-        <div class="logo-icon">
+        <div class="logo-icons">
           <i class="fas fa-baby"></i>
+          <i class="fas fa-child"></i>
+          <i class="fas fa-user"></i>
         </div>
-        <div class="logo-text">PEDIATRÍA</div>
+        <div class="logo-text">PEDIATRA</div>
+      </div>
+    </div>
+
+    <!-- Patient Information -->
+    <div class="patient-section">
+      <div class="patient-grid">
+        <div class="patient-field">
+          <span class="field-label">Nombre:</span>
+          <span class="field-value">{{ paciente.nombre }}</span>
+        </div>
+        <div class="patient-field">
+          <span class="field-label">Fecha:</span>
+          <span class="field-value">{{ fecha_actual.strftime("%d/%m/%Y") }}</span>
+        </div>
+        <div class="patient-field">
+          <span class="field-label">Edad:</span>
+          <span class="field-value">{{ paciente.edad or '______' }}</span>
+        </div>
+        <div class="patient-field">
+          <span class="field-label">Peso:</span>
+          <span class="field-value">{{ paciente.peso or '______' }} Kg.</span>
+        </div>
+        <div class="patient-field">
+          <span class="field-label">Talla:</span>
+          <span class="field-value">{{ paciente.talla or '______' }} Mts.</span>
+        </div>
+        <div class="patient-field">
+          <span class="field-label">Pc:</span>
+          <span class="field-value">{{ paciente.pc or '______' }} Cms.</span>
+        </div>
       </div>
     </div>
 
     <!-- Content -->
     <div class="content">
-      <!-- Patient Information Grid -->
-      <div class="patient-info-grid">
-        <div class="patient-section">
-          <h3><i class="fas fa-child"></i>DATOS DEL PACIENTE</h3>
-          <div class="info-row">
-            <span class="info-label">Nombre:</span>
-            <span class="info-value">{{ paciente.nombre }}</span>
+      <div class="left-column">
+        {% if receta.sintomas %}
+        <!-- Síntomas -->
+        <div class="medical-section">
+          <div class="section-header">
+            <i class="fas fa-stethoscope"></i>
+            SÍNTOMAS PRESENTADOS
           </div>
-          <div class="info-row">
-            <span class="info-label">Fecha Nacimiento:</span>
-            <span class="info-value">{{ paciente.edad or 'No especificada' }}</span>
-          </div>
-          <div class="info-row">
-            <span class="info-label">Peso:</span>
-            <span class="info-value">{{ paciente.peso or '_____' }} Kg</span>
-          </div>
-          <div class="info-row">
-            <span class="info-label">Talla:</span>
-            <span class="info-value">{{ paciente.talla or '_____' }} Mts</span>
-          </div>
-          <div class="info-row">
-            <span class="info-label">PC:</span>
-            <span class="info-value">{{ paciente.pc or '_____' }} Cms</span>
+          <div class="section-content">
+            <p class="content-text">{{ receta.sintomas }}</p>
           </div>
         </div>
-        
-        <div class="patient-section">
-          <h3><i class="fas fa-calendar"></i>INFORMACIÓN DE CONSULTA</h3>
-          <div class="info-row">
-            <span class="info-label">Fecha:</span>
-            <span class="info-value">{{ fecha_actual.strftime("%d/%m/%Y") }}</span>
+        {% endif %}
+
+        <!-- Diagnóstico -->
+        <div class="medical-section">
+          <div class="section-header">
+            <i class="fas fa-diagnoses"></i>
+            DIAGNÓSTICO MÉDICO
           </div>
-          <div class="info-row">
-            <span class="info-label">Hora:</span>
-            <span class="info-value">{{ fecha_actual.strftime("%H:%M") }}</span>
+          <div class="section-content">
+            <p class="content-text">{{ receta.diagnostico }}</p>
           </div>
-          <div class="info-row">
-            <span class="info-label">Estatura:</span>
-            <span class="info-value">{{ paciente.talla or '_____' }} Mts</span>
+        </div>
+
+        {% if receta.tipo == 'diagnostico' and receta.receta %}
+        <!-- Medicamentos -->
+        <div class="medical-section">
+          <div class="section-header">
+            <i class="fas fa-pills"></i>
+            MEDICAMENTOS PRESCRITOS
           </div>
-          {% if paciente.nombre_familiar %}
-          <div class="info-row">
-            <span class="info-label">Responsable:</span>
-            <span class="info-value">{{ paciente.nombre_familiar }}</span>
+          <div class="section-content">
+            <ul class="medication-list">
+              {% for m in receta.receta %}
+              <li class="medication-item">
+                <div class="medication-number">{{ loop.index }}</div>
+                <div class="medication-name">{{ m }}</div>
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+        {% endif %}
+
+        {% if receta.indicaciones %}
+        <!-- Indicaciones -->
+        <div class="medical-section">
+          <div class="section-header">
+            <i class="fas fa-clipboard-list"></i>
+            INDICACIONES ESPECIALES
+          </div>
+          <div class="section-content">
+            <p class="content-text">{{ receta.indicaciones }}</p>
+          </div>
+        </div>
+        {% endif %}
+
+        <!-- Signature -->
+        <div class="signature-section">
+          <div class="signature-line"></div>
+          <div class="doctor-signature">Dr. Moisés González Gallardo</div>
+          <div class="signature-details">
+            Médico Pediatra Certificado<br>
+            Cédula Profesional: 1330601
+          </div>
+        </div>
+      </div>
+
+      {% if receta.tipo == 'dieta' %}
+      <!-- Diet Plan -->
+      <div class="right-column">
+        <div class="diet-content">
+          {% if receta.dieta_contenido == '6_meses' %}
+          <div class="diet-title">📌 DIETA DE 6 MESES</div>
+          
+          <div class="diet-schedule">
+            <div class="diet-time">6 a 7 AM</div>
+            <div class="diet-food">Leche</div>
+          </div>
+          
+          <div class="diet-schedule">
+            <div class="diet-time">9-10 AM</div>
+            <div class="diet-food">Papilla de cereal de arroz, avena o trigo con leche</div>
+            <div class="diet-food">Papilla de fruta = plátano, manzana, pera, papaya, chabacano, aguacate, guayaba, durazno, mango, ciruela pasa, naranja, piña, mamey</div>
+          </div>
+          
+          <div class="diet-schedule">
+            <div class="diet-time">12 hrs</div>
+            <div class="diet-food">Leche</div>
+          </div>
+          
+          <div class="diet-schedule">
+            <div class="diet-time">14-15 hrs</div>
+            <div class="diet-food">Papilla de verduras (cocidas y sin sal): papa, chayote, zanahoria, chícharos, ejotes, jitomate</div>
+            <div class="diet-food">Carne molida de res (arrachera, sirloin) o pechuga de pollo</div>
+            <div class="diet-food">Betabel</div>
+          </div>
+          
+          <div class="diet-schedule">
+            <div class="diet-time">16-17 hrs</div>
+            <div class="diet-food">Leche</div>
+          </div>
+          
+          <div class="diet-schedule">
+            <div class="diet-time">19 hrs</div>
+            <div class="diet-food">Papilla de leche con cereal + papilla de fruta (de la misma de la mañana)</div>
+          </div>
+          
+          <div class="diet-schedule">
+            <div class="diet-time">21-22 hrs</div>
+            <div class="diet-food">Última toma de leche</div>
+          </div>
+          
+          <div class="diet-notes">
+            <h4>Notas:</h4>
+            <ul>
+              <li>Introducir un alimento nuevo cada 2-3 días vigilando alergias (vómito, diarrea, erupciones).</li>
+              <li>Frutas rayadas o cocidas, iniciar con probaditas.</li>
+              <li>Cereal solo arroz, avena o trigo (dar con cuchara, no biberón).</li>
+              <li>Cocer carne con verduras y caldo sin grasa, luego licuar.</li>
+              <li>Evitar leche de vaca, sal y azúcar añadida.</li>
+              <li>La leche materna o fórmula sigue siendo la base de su nutrición.</li>
+            </ul>
+          </div>
+          
+          {% elif receta.dieta_contenido == '7_meses' %}
+          <div class="diet-title">📌 DIETA DE 7 MESES</div>
+          
+          <div class="diet-schedule">
+            <div class="diet-time">6-7 AM</div>
+            <div class="diet-food">Leche</div>
+          </div>
+          
+          <div class="diet-schedule">
+            <div class="diet-time">9-10 AM</div>
+            <div class="diet-food">Papilla de cereal de arroz, avena o trigo con leche</div>
+            <div class="diet-food">Papilla de fruta</div>
+          </div>
+          
+          <div class="diet-schedule">
+            <div class="diet-time">12 PM</div>
+            <div class="diet-food">Leche</div>
+          </div>
+          
+          <div class="diet-schedule">
+            <div class="diet-time">14-15 PM</div>
+            <div class="diet-food">Verduras cocidas y licuadas con pechuga, pavo o carne de res (ternera, chamberete)</div>
+            <div class="diet-food">Filete de pescado, salmón o leguminosas</div>
+          </div>
+          
+          <div class="diet-schedule">
+            <div class="diet-time">16-17 PM</div>
+            <div class="diet-food">Leche</div>
+          </div>
+          
+          <div class="diet-schedule">
+            <div class="diet-time">19 PM</div>
+            <div class="diet-food">Papilla de leche con cereal + papilla de fruta</div>
+          </div>
+          
+          <div class="diet-schedule">
+            <div class="diet-time">21-22 PM</div>
+            <div class="diet-food">Última toma de leche</div>
+          </div>
+          
+          <div class="diet-notes">
+            <h4>Notas:</h4>
+            <ul>
+              <li>Tomas de leche 6-7 oz (si más de 7 oz, suspender leche de mediodía).</li>
+              <li>Frutas: plátano, manzana, pera, papaya, mango, guayaba, durazno, aguacate.</li>
+              <li>Verduras: chayote, zanahoria, chícharos, brócoli, calabaza, ejotes, betabel.</li>
+              <li>Si tiene dientes, dar picado y no colado.</li>
+              <li>Leguminosas: frijoles, garbanzos, alubias (remojar 8 hrs, cocer con agua nueva, licuar y colar).</li>
+            </ul>
+          </div>
+          
+          {% elif receta.dieta_contenido == '8_meses' %}
+          <div class="diet-title">📌 DIETA DE 8 MESES</div>
+          
+          <div class="diet-schedule">
+            <div class="diet-time">6-7 hrs</div>
+            <div class="diet-food">Leche</div>
+          </div>
+          
+          <div class="diet-schedule">
+            <div class="diet-time">9-10 hrs</div>
+            <div class="diet-food">Cereal de arroz o avena con leche y fruta</div>
+            <div class="diet-food">Puré de papa con mantequilla o queso asadero con jamón de pavo en trocitos + yogur natural</div>
+          </div>
+          
+          <div class="diet-schedule">
+            <div class="diet-time">12 hrs</div>
+            <div class="diet-food">Leche</div>
+          </div>
+          
+          <div class="diet-schedule">
+            <div class="diet-time">14 hrs</div>
+            <div class="diet-food">Verduras cocidas sin sal con carne de pollo, res o pavo</div>
+            <div class="diet-food">Filete de pescado, salmón, aguacate</div>
+            <div class="diet-food">Leguminosas (habas, lentejas, frijoles, garbanzos) coladas y licuadas</div>
+            <div class="diet-food">Tortilla de maíz o sopa de arroz o pasta</div>
+          </div>
+          
+          <div class="diet-schedule">
+            <div class="diet-time">16 hrs</div>
+            <div class="diet-food">Leche</div>
+          </div>
+          
+          <div class="diet-schedule">
+            <div class="diet-time">19 hrs</div>
+            <div class="diet-food">Cereal con leche y fruta o yogurt, ó queso con jamón en trocitos</div>
+          </div>
+          
+          <div class="diet-schedule">
+            <div class="diet-time">21 hrs</div>
+            <div class="diet-food">Última toma de leche</div>
+          </div>
+          
+          <div class="diet-notes">
+            <h4>Notas:</h4>
+            <ul>
+              <li>Si ya tiene dientes, dar alimentos picados (no colados).</li>
+              <li>Tomas de leche: 3 de 8 oz (si menos, dar 4).</li>
+              <li>Continuar evitando carne de cerdo y huevo.</li>
+            </ul>
+          </div>
+          
+          {% elif receta.dieta_contenido == '9_12_meses' %}
+          <div class="diet-title">📌 DIETA DE 9 A 12 MESES</div>
+          
+          <div class="diet-schedule">
+            <div class="diet-time">6-7 hrs</div>
+            <div class="diet-food">Leche</div>
+          </div>
+          
+          <div class="diet-schedule">
+            <div class="diet-time">9-10 hrs</div>
+            <div class="diet-food">Cereal de arroz o avena con leche y fruta</div>
+            <div class="diet-food">Yogurt natural, queso asadero en trocitos con jamón de pavo</div>
+            <div class="diet-food">Yema de huevo cocida (cada tercer día)</div>
+          </div>
+          
+          <div class="diet-schedule">
+            <div class="diet-time">13-14 hrs</div>
+            <div class="diet-food">Vegetales con carne (pollo, pavo, ternera, hígado, filete de pescado, salmón)</div>
+            <div class="diet-food">Leguminosas o cremas con sopa de arroz, tortilla de maíz</div>
+          </div>
+          
+          <div class="diet-schedule">
+            <div class="diet-time">16-17 hrs</div>
+            <div class="diet-food">Leche</div>
+          </div>
+          
+          <div class="diet-schedule">
+            <div class="diet-time">19 hrs</div>
+            <div class="diet-food">Cereal con leche y fruta o queso con jamón, o lo que haya comido a mediodía</div>
+          </div>
+          
+          <div class="diet-schedule">
+            <div class="diet-time">21-22 hrs</div>
+            <div class="diet-food">Última toma de leche</div>
+          </div>
+          
+          <div class="diet-notes">
+            <h4>Notas:</h4>
+            <ul>
+              <li>Tomas de leche de 8 oz (si menos, dar otra toma).</li>
+              <li>Alimento picado, no colado, según tolerancia.</li>
+              <li>Frutas: manzana, pera, mango, durazno, ciruela pasa, plátano, papaya, guayaba, fresa, naranja.</li>
+              <li>Verduras: chayote, zanahoria, calabaza, ejote, chícharo, brócoli, espinaca, jitomate, coliflor.</li>
+              <li>Leguminosas: frijoles, garbanzos, habas, alubias (bien cocidas y coladas hasta el año).</li>
+              <li>Ya pueden comer cremas con leche.</li>
+            </ul>
+          </div>
+          
+          {% elif receta.dieta_contenido == '1_2_anos' %}
+          <div class="diet-title">📌 DIETA DE 1 A 2 AÑOS</div>
+          
+          <div class="diet-schedule">
+            <div class="diet-food"><strong>A esta edad el niño(a) debe integrarse a la dieta familiar.</strong></div>
+          </div>
+          
+          <div class="diet-schedule">
+            <div class="diet-food">Nutrición principalmente de: carnes (res, pollo, pescado), vegetales, leguminosas, huevo, cereales y lácteos.</div>
+          </div>
+          
+          <div class="diet-schedule">
+            <div class="diet-food">La leche puede ser entera o fortificada según necesidad.</div>
+          </div>
+          
+          <div class="diet-schedule">
+            <div class="diet-food">Comerá cantidades pequeñas pero más seguido (4-6 veces al día).</div>
+          </div>
+          
+          <div class="diet-schedule">
+            <div class="diet-food">Crecimiento más lento (ya no duplica talla como de bebé).</div>
+          </div>
+          
+          <div class="diet-schedule">
+            <div class="diet-food">En dentición, dar alimentos blandos.</div>
+          </div>
+          
+          <div class="diet-notes">
+            <h4>Notas:</h4>
+            <ul>
+              <li>No dar leche baja en grasa antes de los 2 años.</li>
+              <li>No dar dulces, bebidas endulzadas, refrescos, té, chocolate ni sal añadida.</li>
+              <li>Si rechaza un alimento, ofrecer de nuevo más adelante.</li>
+              <li>Nunca forzarlo a comer.</li>
+              <li>Evitar alimentos que puedan provocar asfixia: frutos secos, nueces, semillas, almendras, trozos de salchicha, verduras crudas.</li>
+            </ul>
           </div>
           {% endif %}
-          {% if paciente.telefono %}
-          <div class="info-row">
-            <span class="info-label">Teléfono:</span>
-            <span class="info-value">{{ paciente.telefono }}</span>
-          </div>
-          {% endif %}
-        </div>
-      </div>
-
-      {% if receta.sintomas %}
-      <!-- Síntomas -->
-      <div class="medical-section">
-        <div class="section-header">
-          <i class="fas fa-stethoscope"></i>
-          SÍNTOMAS PRESENTADOS
-        </div>
-        <div class="section-content">
-          <p class="content-text">{{ receta.sintomas }}</p>
         </div>
       </div>
       {% endif %}
-
-      <!-- Diagnóstico -->
-      <div class="medical-section">
-        <div class="section-header">
-          <i class="fas fa-diagnoses"></i>
-          DIAGNÓSTICO MÉDICO
-        </div>
-        <div class="section-content">
-          <p class="content-text">{{ receta.diagnostico }}</p>
-        </div>
-      </div>
-
-      {% if receta.tipo == 'diagnostico' and receta.receta %}
-      <!-- Medicamentos -->
-      <div class="medical-section">
-        <div class="section-header">
-          <i class="fas fa-pills"></i>
-          MEDICAMENTOS PRESCRITOS
-        </div>
-        <div class="section-content">
-          <ul class="medication-list">
-            {% for m in receta.receta %}
-            <li class="medication-item">
-              <div class="medication-number">{{ loop.index }}</div>
-              <div class="medication-name">{{ m }}</div>
-            </li>
-            {% endfor %}
-          </ul>
-        </div>
-      </div>
-      {% endif %}
-
-      {% if receta.tipo == 'dieta' and receta.dieta_contenido %}
-      <!-- Plan de Dieta -->
-      <div class="medical-section">
-        <div class="section-header">
-          <i class="fas fa-utensils"></i>
-          PLAN DE ALIMENTACIÓN
-        </div>
-        <div class="section-content">
-          <div class="diet-content">{{ receta.dieta_contenido }}</div>
-        </div>
-      </div>
-      {% endif %}
-
-      {% if receta.indicaciones %}
-      <!-- Indicaciones -->
-      <div class="medical-section">
-        <div class="section-header">
-          <i class="fas fa-clipboard-list"></i>
-          INDICACIONES ESPECIALES
-        </div>
-        <div class="section-content">
-          <p class="content-text">{{ receta.indicaciones }}</p>
-        </div>
-      </div>
-      {% endif %}
-
-      <!-- Signature -->
-      <div class="signature-section">
-        <div class="signature-line"></div>
-        <div class="doctor-signature">Dr. Moisés González Gallardo</div>
-        <div class="signature-details">
-          Médico Pediatra Certificado<br>
-          Cédula Profesional: 1234567
-        </div>
-      </div>
-    </div>
-
-    <!-- QR Codes (placeholders) -->
-    <div class="qr-section print-hidden">
-      <div class="qr-placeholder">
-        <div>QR<br>Receta</div>
-      </div>
-      <div class="qr-placeholder">
-        <div>QR<br>Verificación</div>
-      </div>
-    </div>
-
-    <!-- Footer -->
-    <div class="footer">
-      <div class="footer-content">
-        <div class="footer-item">
-          <i class="fas fa-envelope"></i>
-          <div>hola@sitioincrieble.com<br>www.sitioincrieble.com</div>
-        </div>
-        <div class="footer-item">
-          <i class="fas fa-phone"></i>
-          <div>(55) 1234 5678<br>Calle Cualquiera 123, Cualquier Lugar</div>
-        </div>
-        <div class="footer-item">
-          <i class="fas fa-clock"></i>
-          <div>Horario: Lunes a Viernes 8:00am - 5:00pm<br>Sábados 9:00am - 2:00pm</div>
-        </div>
-      </div>
     </div>
   </div>
   
@@ -572,82 +769,6 @@
       <a href="/historial/{{ paciente._id }}" style="background: #6c757d; color: white; border: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center;">
         <i class="fas fa-arrow-left" style="margin-right: 8px;"></i>Volver al Historial
       </a>
-    </div>
-  </div>
-
-  <!-- Back of prescription (page 2) -->
-  <div class="prescription-container page-break" style="margin-top: 40px;">
-    <div style="padding: 40px; height: 100%; background: #f8f9fa; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
-      
-      <!-- QR Codes Section -->
-      <div style="margin-bottom: 40px;">
-        <h3 style="color: #4A90E2; margin-bottom: 30px; font-weight: 600;">
-          <i class="fas fa-qrcode me-2"></i>
-          Códigos de Verificación
-        </h3>
-        
-        <div style="display: flex; flex-direction: column; gap: 30px; align-items: center;">
-          <div style="text-align: center;">
-            <div style="width: 120px; height: 120px; background: white; border: 2px solid #4A90E2; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px;">
-              <i class="fas fa-qrcode" style="font-size: 60px; color: #4A90E2;"></i>
-            </div>
-            <p style="margin: 0; font-size: 12px; color: #666;">
-              En caso de urgencia o Alergia<br>
-              escanea el código QR para obtener<br>
-              el historial médico y alergias
-            </p>
-          </div>
-          
-          <div style="text-align: center;">
-            <div style="width: 120px; height: 120px; background: white; border: 2px solid #28a745; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px;">
-              <i class="fas fa-qrcode" style="font-size: 60px; color: #28a745;"></i>
-            </div>
-            <p style="margin: 0; font-size: 12px; color: #666;">
-              Código de verificación<br>
-              para validar la autenticidad<br>
-              de esta receta médica
-            </p>
-          </div>
-          
-          <div style="text-align: center;">
-            <div style="width: 120px; height: 120px; background: white; border: 2px solid #dc3545; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px;">
-              <i class="fas fa-qrcode" style="font-size: 60px; color: #dc3545;"></i>
-            </div>
-            <p style="margin: 0; font-size: 12px; color: #666;">
-              Código de acceso<br>
-              al expediente digital<br>
-              del paciente
-            </p>
-          </div>
-        </div>
-      </div>
-      
-      <!-- Important Notes -->
-      <div style="background: white; border-radius: 12px; padding: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); max-width: 500px;">
-        <h4 style="color: #dc3545; margin-bottom: 15px; font-weight: 600;">
-          <i class="fas fa-exclamation-triangle me-2"></i>
-          Información Importante
-        </h4>
-        <ul style="text-align: left; font-size: 13px; line-height: 1.6; color: #555; margin: 0; padding-left: 20px;">
-          <li>Esta receta es válida únicamente con la firma y sello del médico</li>
-          <li>Conserve este documento para futuras consultas</li>
-          <li>En caso de reacciones adversas, suspenda el tratamiento y consulte inmediatamente</li>
-          <li>No automedicarse ni modificar las dosis prescritas</li>
-          <li>Mantenga los medicamentos fuera del alcance de los niños</li>
-        </ul>
-      </div>
-      
-      <!-- Emergency Contact -->
-      <div style="margin-top: 30px; background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 8px; padding: 20px; max-width: 400px;">
-        <h5 style="color: #856404; margin-bottom: 10px; font-weight: 600;">
-          <i class="fas fa-phone-alt me-2"></i>
-          Contacto de Emergencia
-        </h5>
-        <p style="margin: 0; font-size: 14px; color: #856404;">
-          <strong>24 horas:</strong> (55) 1234 5678<br>
-          <strong>WhatsApp:</strong> (55) 9876 5432
-        </p>
-      </div>
     </div>
   </div>
 </body>
